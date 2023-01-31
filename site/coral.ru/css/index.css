@@ -265,6 +265,7 @@ body .contentLayout-BaseContainer .notcritical > .container > .row .rightcol > h
   transition: background-color 0.5s;
 }
 #site-wrap section > .contenu [class*="slider"] .flickity-page-dots .dot.is-selected {
+  pointer-events: none;
   background-color: #888888;
 }
 #site-wrap section.advantages {
@@ -384,6 +385,215 @@ body .contentLayout-BaseContainer .notcritical > .container > .row .rightcol > h
 }
 #site-wrap section.advantages > .contenu .adv-list-slider .adv .pad p {
   margin: 1em 0 0;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget {
+  width: 100%;
+  font-size: 14px;
+  filter: drop-shadow(0px 20px 60px rgba(0, 0, 0, 0.2));
+}
+@media screen and (max-width: 1439px) {
+  #site-wrap section.burning-tours > .contenu .burning-tours-widget {
+    font-size: 11.66666667px;
+  }
+}
+@media screen and (max-width: 1199px) {
+  #site-wrap section.burning-tours > .contenu .burning-tours-widget {
+    font-size: 1.16666667vw;
+  }
+}
+@media screen and (max-width: 768px) {
+  #site-wrap section.burning-tours > .contenu .burning-tours-widget {
+    font-size: 2.77777778vw;
+  }
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector {
+  position: relative;
+  display: flex;
+  padding: 0!important;
+  margin: 0;
+  font-size: 1.14285714em;
+  background-color: #e6e7e8;
+  border-radius: 1em 1em 0 0;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector > li {
+  position: relative;
+  flex: 1 1 auto;
+  line-height: 1;
+  padding: 0.7em 1em;
+  text-align: center;
+  border-radius: 1em 1em 0 0;
+  cursor: pointer;
+  -webkit-transition: background 0.5s, color 0.5s;
+  -moz-transition: background 0.5s, color 0.5s;
+  -ms-transition: background 0.5s, color 0.5s;
+  -o-transition: background 0.5s, color 0.5s;
+  transition: background 0.5s, color 0.5s;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector > li:nth-child(n+2):before {
+  display: block;
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 1.5em;
+  background-color: #6d6e71;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector > li.selected {
+  pointer-events: none;
+  background-color: white;
+  color: black;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector > li.selected:before {
+  display: none!important;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector > li.selected + li:before {
+  display: none;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container {
+  background-color: white;
+  border-radius: 0 0 1.5em 1.5em;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider {
+  display: flex;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider.flickity-enabled {
+  display: block;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .flickity-viewport {
+  overflow: hidden;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .flickity-page-dots {
+  padding: 1.5em;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .flickity-page-dots .dot {
+  width: 1.14285714em;
+  height: 1.14285714em;
+  cursor: pointer;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card {
+  flex: 0 0 auto;
+  width: 20%;
+  padding: 1.5em 1em;
+  font-weight: 300;
+  color: black;
+}
+@media screen and (max-width: 1440px) {
+  #site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card {
+    width: 25%;
+  }
+}
+@media screen and (max-width: 768px) {
+  #site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 536px) {
+  #site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card {
+    width: 50%;
+  }
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad > * {
+  max-width: 100%;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .visual {
+  position: relative;
+  width: 100%;
+  background: center no-repeat;
+  background-size: cover;
+  border-radius: 1em;
+  overflow: hidden;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .visual:before {
+  content: '';
+  display: block;
+  padding-top: 56.25%;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .visual > * {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .category {
+  display: flex;
+  justify-content: center;
+  letter-spacing: normal;
+  line-height: 1.4;
+  margin-top: 0.5em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #F0AB00;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .category .star {
+  width: 1em;
+  height: 1em;
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjkiIGhlaWdodD0iMjkiIHZpZXdCb3g9IjAgMCAyOSAyOSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE5LjYxMDIgOC4yMjAyMUwyNy41MDExIDkuMzc5NDVDMjcuODIzMyA5LjQyNjQyIDI4LjEyNiA5LjU2MTggMjguMzc1MiA5Ljc3MDQxQzI4LjYyNDUgOS45NzkwMiAyOC44MTA1IDEwLjI1MjYgMjguOTEyNCAxMC41NjA2QzI5LjAxNDIgMTAuODcwMiAyOS4wMjc1IDExLjIwMTkgMjguOTUwOSAxMS41MTg2QzI4Ljg3NDMgMTEuODM1MyAyOC43MTA4IDEyLjEyNDYgMjguNDc4NiAxMi4zNTQxTDIyLjc1NjcgMTcuOTQyNUwyNC4xMDc1IDI1Ljk1ODdDMjQuMTYyNiAyNi4yODE1IDI0LjEyNTQgMjYuNjEzMSAyNC4wMDAyIDI2LjkxNThDMjMuODc0OSAyNy4yMTg1IDIzLjY2NjYgMjcuNDc5OSAyMy4zOTkyIDI3LjY3MDNDMjMuMTMzIDI3Ljg2MDcgMjIuODE4OCAyNy45NzMzIDIyLjQ5MTggMjcuOTk1NUMyMi4xNjQ5IDI4LjAxNzcgMjEuODM4MiAyNy45NDg3IDIxLjU0ODYgMjcuNzk2TDE0LjQ5NzggMjQuMDUzMUw3LjQ1MjQ2IDI3Ljc5ODhDNy4xNjE4NyAyNy45NTE1IDYuODM0MzIgMjguMDIwNiA2LjUwNjQ5IDI3Ljk5ODRDNi4xNzg2NyAyNy45NzYyIDUuODYzNTQgMjcuODYzNSA1LjU5NjQxIDI3LjY3M0M1LjMyOTY1IDI3LjQ4MjIgNS4xMjIyNCAyNy4yMjA1IDQuOTk3OTMgMjYuOTE3OEM0Ljg3MzYyIDI2LjYxNTEgNC44Mzc0NCAyNi4yODM3IDQuODkzNTIgMjUuOTYxNUw2LjI0NDM4IDE3Ljk0NTJMMC41MjA4MTQgMTIuMzU0MUMwLjI4ODgyNCAxMi4xMjQ1IDAuMTI1NDY3IDExLjgzNTIgMC4wNDg5NjM4IDExLjUxODVDLTAuMDI3NTM5NyAxMS4yMDE4IC0wLjAxNDE4MjEgMTAuODcwMSAwLjA4NzU1MSAxMC41NjA2QzAuMTg4OTA4IDEwLjI1MiAwLjM3NDk1OCA5Ljk3Nzg2IDAuNjI0NjU0IDkuNzY5MTNDMC44NzQzNSA5LjU2MDQgMS4xNzc3MyA5LjQyNTQxIDEuNTAwNDYgOS4zNzk0NUw5LjM4NDg1IDguMjIwMjFMMTIuOTIxMiAwLjk4NDI2NUMxMy4wNjQ0IDAuNjg5MjYyIDEzLjI4ODMgMC40NDA0MzYgMTMuNTY3IDAuMjY2MzQyQzEzLjg0NTggMC4wOTIyNDgxIDE0LjE2ODIgLTYuMDYwODllLTA1IDE0LjQ5NzIgNS42Njc1M2UtMDZDMTQuODI3MiAtMC4wMDA4MzE1MjMgMTUuMTUwNiAwLjA5MTA5NzYgMTUuNDMwNCAwLjI2NTIyMUMxNS43MTAyIDAuNDM5MzQ0IDE1LjkzNDkgMC42ODg1ODYgMTYuMDc4NyAwLjk4NDI2NUwxOS42MTAyIDguMjIwMjFaIiBmaWxsPSIjRjBBQjAwIi8+Cjwvc3ZnPgo=") center no-repeat;
+  background-size: contain;
+  margin: 0.2em 2px;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .location {
+  width: auto;
+  max-width: 1005px;
+  height: auto;
+  text-align: left;
+  padding: 0.25em 1em;
+  border-radius: 0 0 1em 0;
+  background: linear-gradient(90deg, #fbb200 0%, #ffcc00 100%);
+  color: white;
+  font-weight: 700;
+  line-height: 1.1;
+  box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.3);
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+  line-height: 1.2;
+  height: 3.6em;
+  font-weight: bold;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .transfer {
+  display: inline-flex;
+  align-items: center;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .transfer .material-icons {
+  font-size: 1em;
+  margin-right: 0.5em;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .old-price {
+  font-size: 1.38em;
+  margin-top: 0.5em;
+  position: relative;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .old-price:before {
+  content: '';
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  transform: translate(-5%, -5%);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzU3IiBoZWlnaHQ9Ijg1IiB2aWV3Qm94PSIwIDAgMzU3IDg1IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMS41IDgwQzEwNiA0NiAyMDcgMTggMzU2IDUiIHN0cm9rZT0iI0UyMzIwRiIgc3Ryb2tlLXdpZHRoPSI5Ii8+Cjwvc3ZnPgo=") center no-repeat;
+  background-size: contain;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .price {
+  font-size: 1.62em;
+  font-weight: bold;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .actions {
+  margin-top: 0.5em;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .actions > a {
+  font-size: 1.14285714em;
+  font-weight: 500;
 }
 #site-wrap section.why {
   overflow: hidden;
@@ -655,7 +865,8 @@ body .contentLayout-BaseContainer .notcritical > .container > .row .rightcol > h
 #site-wrap .flickity-enabled {
   outline: none;
 }
-.actions > button {
+.actions > button,
+.actions > a {
   font-family: inherit;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -670,17 +881,19 @@ body .contentLayout-BaseContainer .notcritical > .container > .row .rightcol > h
   background: linear-gradient(45.62deg, #FB7099 0%, #F0AB13 100%);
   border-radius: 8px;
   border: 0;
-  color: white;
+  color: white!important;
   cursor: pointer;
 }
-.actions > button:active {
+.actions > button:active,
+.actions > a:active {
   -webkit-transform: translateY(2px);
   -moz-transform: translateY(2px);
   -ms-transform: translateY(2px);
   -o-transform: translateY(2px);
   transform: translateY(2px);
 }
-.actions > button.with-down-arrow:after {
+.actions > button.with-down-arrow:after,
+.actions > a.with-down-arrow:after {
   content: '';
   width: 0.75em;
   height: 0.75em;

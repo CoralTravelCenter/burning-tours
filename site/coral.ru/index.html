@@ -1,5 +1,6 @@
 <body>
 <link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/css/perfect-scrollbar.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <div id="site-wrap">
 
@@ -24,6 +25,26 @@
                         <p>стройте краткосрочные планы в изменчивые времена</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="burning-tours">
+        <div class="contenu">
+            <div class="burning-tours-widget">
+                <ul class="tabs-selector">
+                    <li data-default data-destination-name="Таиланд" data-destination-id="33" data-destination-url="/main/thailand/" data-option-id="22130ab6-bf59-4e7d-9b32-af3f00fab20e">Таиланд</li>
+                    <li data-destination-name="Турция" data-destination-id="1" data-destination-url="/main/turkey/" data-option-id="7c5ec50a-c9d6-490a-a867-ad8700e553ba">Турция</li>
+                    <li data-destination-name="Индия" data-destination-id="52" data-destination-url="/main/india/" data-option-id="9572e98e-6eb3-4352-8b58-af38013bbe00">Индия</li>
+                    <li data-destination-name="Египет" data-destination-id="12" data-destination-url="/main/egypt/" data-option-id="8c2b22b1-23aa-4b86-8703-aeef00f7d099">Египет</li>
+                    <li data-destination-name="ОАЭ" data-destination-id="31" data-destination-url="/main/uae/" data-option-id="382b8f85-97d3-4855-9882-ae1a01112510">ОАЭ</li>
+                    <li data-destination-name="Россия" data-destination-id="3" data-destination-url="/main/russia/" data-option-id="d712c058-09ca-4e24-9251-ae7b009ea616">Россия</li>
+                    <li data-destination-name="Мальдивы" data-destination-id="35" data-destination-url="/main/maldives/" data-option-id="738d08d5-7a29-4d8b-8522-af090117a316">Мальдивы</li>
+                    <li data-destination-name="Армения" data-destination-id="5" data-destination-url="/armeniya/" data-option-id="1ebf5174-f5fa-4e1a-b336-aedd00bbb5dc">Армения</li>
+                    <li data-destination-name="Азербайджан" data-destination-id="7" data-destination-url="/azerbaijan/" data-option-id="a05e45cb-7320-44d0-afe5-aedd00c06468">Азербайджан</li>
+                    <li data-destination-name="Беларусь" data-destination-id="8" data-destination-url="/azerbaijan/" data-option-id="4e22207f-d2b6-4d7a-a266-aedd00babe6a">Беларусь</li>
+                </ul>
+                <div class="destinations-container"><!----></div>
             </div>
         </div>
     </section>
@@ -89,6 +110,34 @@
 
     <!-- #source _section_message_us.html -->
 
+    <script id="_best_deals_slider_markup" type="mustache/template">
+        <div class="destination-slider">
+            {{ #best_deals_list }}
+            <div class="best-deal-card">
+                <div class="pad">
+                    <div class="visual" style="background-image: url({{{ visual }}});">
+                        <div class="location">{{ location }}</div>
+                    </div>
+                    <div class="category">
+                        {{ #stars }}<span class="star"> </span>{{ /stars }}
+                        {{ ^stars }}{{ category }}{{ /stars }}
+                    </div>
+                    <div class="name">{{{ name }}}</div>
+                    <div class="terms">
+                        <span class="nights">{{ nights }}</span> <span class="tourists">{{ tourists }}</span>
+                    </div>
+                    <div class="transfer">{{{ transfer_info }}}</div>
+                    <div class="old-price rur">{{ old_price_formatted }}</div>
+                    <div class="price rur">{{ price_formatted }}</div>
+                    <div class="actions">
+                        <a href="{{{ xlink }}}" target="_blank">Купить тур</a>
+                    </div>
+                </div>
+            </div>
+            {{ /best_deals_list }}
+        </div>
+    </script>
+
     <script id="_intro_markup" type="mustache/template">
         <div class="video-box">
             <div class="backdrop"></div>
@@ -101,7 +150,7 @@
                         Цены на туры ниже чем в сезон!
                     </p>
                     <div class="actions">
-                        <button class="with-down-arrow">Смотреть подборку</button>
+                        <button class="with-down-arrow" data-scrollto="section.burning-tours">Смотреть подборку</button>
                     </div>
                 </div>
             </div>
@@ -109,6 +158,6 @@
     </script>
 
 </div>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.2.1/mustache.min.js"></script>
 <script src="js/index.js"></script>
 </body>
