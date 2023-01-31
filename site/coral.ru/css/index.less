@@ -143,12 +143,32 @@
 					filter: drop-shadow(0px 20px 60px rgba(0, 0, 0, 0.2));
 					ul.tabs-selector {
 						position: relative;
+						overflow: hidden;
+						overflow-x: auto;
+						scrollbar-width: none;
+						&::-webkit-scrollbar {
+							display: none;
+						}
 						display: flex;
 						padding: 0!important;
 						margin: 0;
 						font-size: 16/14em;
 						background-color: #e6e7e8;
 						border-radius: 1em 1em 0 0;
+						&.scrollable-left:before {
+							opacity: 1;
+						}
+						&:before {
+							content: '<<';
+							position: absolute;
+							left: 0;
+							top: 0;
+							height: 100%;
+							background: white;
+							opacity: 0;
+							.transit(opacity);
+							pointer-events: none;
+						}
 						>li {
 							position: relative;
 							flex: 1 1 auto;
@@ -228,6 +248,7 @@
 										background-size: cover;
 										border-radius: 1em;
 										overflow: hidden;
+										.rounded-corners-overflow-fix;
 									}
 									.category {
 										display: flex;

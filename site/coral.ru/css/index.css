@@ -408,12 +408,36 @@ body .contentLayout-BaseContainer .notcritical > .container > .row .rightcol > h
 }
 #site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector {
   position: relative;
+  overflow: hidden;
+  overflow-x: auto;
+  scrollbar-width: none;
   display: flex;
   padding: 0!important;
   margin: 0;
   font-size: 1.14285714em;
   background-color: #e6e7e8;
   border-radius: 1em 1em 0 0;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector::-webkit-scrollbar {
+  display: none;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector.scrollable-left:before {
+  opacity: 1;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector:before {
+  content: '<<';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: white;
+  opacity: 0;
+  -webkit-transition: opacity 0.5s;
+  -moz-transition: opacity 0.5s;
+  -ms-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+  pointer-events: none;
 }
 #site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector > li {
   position: relative;
@@ -510,6 +534,7 @@ body .contentLayout-BaseContainer .notcritical > .container > .row .rightcol > h
   background-size: cover;
   border-radius: 1em;
   overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 #site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider .best-deal-card .pad .visual:before {
   content: '';

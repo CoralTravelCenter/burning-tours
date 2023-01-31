@@ -188,7 +188,7 @@ $parseResponseMarkup = function(markup) {
 };
 
 ASAP(function() {
-  var $flickityReady, selectDestinationTab;
+  var $flickityReady, $tabs_selector, first_tab_el, io, last_tab_el, selectDestinationTab;
   $('body .subpage-search-bg > .background').append($('#_intro_markup').html());
   $flickityReady = $.Deferred();
   preload('https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.pkgd.min.js', function() {
@@ -199,15 +199,6 @@ ASAP(function() {
       return $(window).scrollTo($(this).attr('data-scrollto'), 500, {
         offset: -150
       });
-    });
-  });
-  preload('https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/perfect-scrollbar.min.js', function() {
-    var scrollable;
-    scrollable = $('.burning-tours-widget .tabs-selector').get(0);
-    return scrollable.perfectscrollbar = new PerfectScrollbar(scrollable, {
-      minScrollbarLength: 20,
-      wheelPropagation: false,
-      useBothWheelAxes: true
     });
   });
   $.when($flickityReady).done(function() {
@@ -271,8 +262,31 @@ ASAP(function() {
     }
   };
   selectDestinationTab('.burning-tours-widget [data-destination-name][data-default]');
-  return $(document).on('click', '.burning-tours-widget [data-destination-name]', function() {
+  $(document).on('click', '.burning-tours-widget [data-destination-name]', function() {
     selectDestinationTab(this);
     return $('.flickity-enabled').flickity('resize');
   });
+  $tabs_selector = $('.burning-tours-widget .tabs-selector');
+  first_tab_el = $tabs_selector.children(':first').get(0);
+  last_tab_el = $tabs_selector.children(':last').get(0);
+  io = new IntersectionObserver(function(entries, observer) {
+    var entry, i, len1, results;
+    results = [];
+    for (i = 0, len1 = entries.length; i < len1; i++) {
+      entry = entries[i];
+      if (entry.target === first_tab_el) {
+        results.push($tabs_selector.toggleClass('scrollable-left', !entry.isIntersecting));
+      } else if (entry.target === last_tab_el) {
+        results.push($tabs_selector.toggleClass('scrollable-right', !entry.isIntersecting));
+      } else {
+        results.push(void 0);
+      }
+    }
+    return results;
+  }, {
+    threshold: 1.0,
+    root: $tabs_selector.get(0)
+  });
+  io.observe(first_tab_el);
+  return io.observe(last_tab_el);
 });

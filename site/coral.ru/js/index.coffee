@@ -117,10 +117,6 @@ ASAP ->
     preload 'https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.3/jquery.scrollTo.min.js', ->
         $(document).on 'click', '[data-scrollto]', -> $(window).scrollTo $(this).attr('data-scrollto'), 500, offset: -150
 
-    preload 'https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/perfect-scrollbar.min.js', ->
-        scrollable = $('.burning-tours-widget .tabs-selector').get(0)
-        scrollable.perfectscrollbar = new PerfectScrollbar(scrollable, { minScrollbarLength: 20, wheelPropagation: false, useBothWheelAxes: yes })
-
     $.when($flickityReady).done ->
         $('.adv-list-slider').flickity
             watchCSS: yes
@@ -175,3 +171,16 @@ ASAP ->
     $(document).on 'click', '.burning-tours-widget [data-destination-name]', ->
         selectDestinationTab this
         $('.flickity-enabled').flickity 'resize'
+
+    $tabs_selector = $('.burning-tours-widget .tabs-selector')
+    first_tab_el = $tabs_selector.children(':first').get(0)
+    last_tab_el = $tabs_selector.children(':last').get(0)
+    io = new IntersectionObserver (entries, observer) ->
+        for entry in entries
+            if entry.target == first_tab_el
+                $tabs_selector.toggleClass 'scrollable-left', not entry.isIntersecting
+            else if entry.target == last_tab_el
+                $tabs_selector.toggleClass 'scrollable-right', not entry.isIntersecting
+    , threshold: 1.0, root: $tabs_selector.get(0)
+    io.observe first_tab_el
+    io.observe last_tab_el
