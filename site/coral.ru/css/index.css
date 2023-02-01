@@ -507,6 +507,16 @@ body .contentLayout-BaseContainer .notcritical > .container > .row .rightcol > h
 }
 #site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider {
   display: flex;
+  -webkit-transition: opacity 0.5s, filter 0.5s;
+  -moz-transition: opacity 0.5s, filter 0.5s;
+  -ms-transition: opacity 0.5s, filter 0.5s;
+  -o-transition: opacity 0.5s, filter 0.5s;
+  transition: opacity 0.5s, filter 0.5s;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider.disabled {
+  pointer-events: none;
+  opacity: 0.3;
+  filter: blur(2px);
 }
 #site-wrap section.burning-tours > .contenu .burning-tours-widget .destinations-container .destination-slider.flickity-enabled {
   display: block;

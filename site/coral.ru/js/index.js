@@ -238,11 +238,11 @@ ASAP(function() {
     existing_slider = $tab_el.addClass('selected').prop('best-deals-slider');
     $tab2hide = $tab_el.siblings('.selected');
     if ($tab2hide.length) {
-      $($tab2hide.prop('best-deals-slider')).hide();
+      $($tab2hide.prop('best-deals-slider')).addClass('disabled');
       $tab2hide.removeClass('selected');
     }
     if (existing_slider) {
-      return $(existing_slider).show();
+      return $(existing_slider).removeClass('disabled').show().siblings('.disabled').hide();
     } else {
       return $fetchBestDeals({
         destinationId: $tab_el.attr('data-destination-id'),
@@ -257,6 +257,7 @@ ASAP(function() {
         }));
         $('.burning-tours-widget .destinations-container').append($slider_markup);
         $tab_el.prop('best-deals-slider', $slider_markup.get(0));
+        $slider_markup.siblings('.disabled').hide();
         return $.when($flickityReady).done(function() {
           $slider_markup.flickity({
             cellSelector: '.best-deal-card',
