@@ -687,11 +687,13 @@ body .subpage-search-bg {
 						text-align: left;
 						font-size: 56/21em;
 						line-height: 1;
-						background: linear-gradient(58.39deg, #FC709A -5.95%, #FFCC00 102.54%);
-						-webkit-background-clip: text;
-						-webkit-text-fill-color: transparent;
-						background-clip: text;
-						text-fill-color: transparent;
+						>span {
+							background: linear-gradient(58.39deg, #FC709A -5.95%, #FFCC00 102.54%);
+							-webkit-background-clip: text;
+							-webkit-text-fill-color: transparent;
+							background-clip: text;
+							text-fill-color: transparent;
+						}
 						@media screen and (max-width: @mobile-breakpoint) {
 							font-size: 2.3em;
 						}
