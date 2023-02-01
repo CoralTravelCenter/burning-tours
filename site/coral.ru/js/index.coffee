@@ -116,6 +116,12 @@ ASAP ->
 
     preload 'https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.3/jquery.scrollTo.min.js', ->
         $(document).on 'click', '[data-scrollto]', -> $(window).scrollTo $(this).attr('data-scrollto'), 500, offset: -150
+        $('.tabs-container .scroll-left').on 'click', ->
+            $scroll_this = $('.burning-tours-widget .tabs-selector')
+            $scroll_this.scrollTo $scroll_this.children(':first'), 500
+        $('.tabs-container .scroll-right').on 'click', ->
+            $scroll_this = $('.burning-tours-widget .tabs-selector')
+            $scroll_this.scrollTo $scroll_this.children(':last'), 500
 
     $.when($flickityReady).done ->
         $('.adv-list-slider').flickity
@@ -173,14 +179,15 @@ ASAP ->
         $('.flickity-enabled').flickity 'resize'
 
     $tabs_selector = $('.burning-tours-widget .tabs-selector')
+    $tabs_container = $tabs_selector.parent()
     first_tab_el = $tabs_selector.children(':first').get(0)
     last_tab_el = $tabs_selector.children(':last').get(0)
     io = new IntersectionObserver (entries, observer) ->
         for entry in entries
             if entry.target == first_tab_el
-                $tabs_selector.toggleClass 'scrollable-left', not entry.isIntersecting
+                $tabs_container.toggleClass 'scrollable-left', not entry.isIntersecting
             else if entry.target == last_tab_el
-                $tabs_selector.toggleClass 'scrollable-right', not entry.isIntersecting
-    , threshold: 1.0, root: $tabs_selector.get(0)
+                $tabs_container.toggleClass 'scrollable-right', not entry.isIntersecting
+    , threshold: 0.5, root: $tabs_container.get(0)
     io.observe first_tab_el
     io.observe last_tab_el

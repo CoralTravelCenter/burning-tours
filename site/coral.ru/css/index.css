@@ -406,7 +406,51 @@ body .contentLayout-BaseContainer .notcritical > .container > .row .rightcol > h
     font-size: 2.77777778vw;
   }
 }
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .tabs-container {
+  width: 100%;
+  position: relative;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .tabs-container.scrollable-left > .scroll-left {
+  pointer-events: auto;
+  opacity: 1;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .tabs-container.scrollable-right > .scroll-right {
+  pointer-events: auto;
+  opacity: 1;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .tabs-container > .scroll-left,
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .tabs-container > .scroll-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 0;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  height: 100%;
+  font-size: 1.2em;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: opacity 0.5s;
+  -moz-transition: opacity 0.5s;
+  -ms-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+  cursor: pointer;
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .tabs-container > .scroll-left {
+  left: 0;
+  padding: 0 1.5em 0 0.5em;
+  background: linear-gradient(to right, #e6e7e8 70%, rgba(230, 231, 232, 0) 100%);
+}
+#site-wrap section.burning-tours > .contenu .burning-tours-widget .tabs-container > .scroll-right {
+  right: 0;
+  padding: 0 0.5em 0 1.5em;
+  background: linear-gradient(to left, #e6e7e8 70%, rgba(230, 231, 232, 0) 100%);
+}
 #site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector {
+  width: 100%;
   position: relative;
   overflow: hidden;
   overflow-x: auto;
@@ -420,24 +464,6 @@ body .contentLayout-BaseContainer .notcritical > .container > .row .rightcol > h
 }
 #site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector::-webkit-scrollbar {
   display: none;
-}
-#site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector.scrollable-left:before {
-  opacity: 1;
-}
-#site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector:before {
-  content: '<<';
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  background: white;
-  opacity: 0;
-  -webkit-transition: opacity 0.5s;
-  -moz-transition: opacity 0.5s;
-  -ms-transition: opacity 0.5s;
-  -o-transition: opacity 0.5s;
-  transition: opacity 0.5s;
-  pointer-events: none;
 }
 #site-wrap section.burning-tours > .contenu .burning-tours-widget ul.tabs-selector > li {
   position: relative;

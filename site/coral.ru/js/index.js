@@ -188,17 +188,27 @@ $parseResponseMarkup = function(markup) {
 };
 
 ASAP(function() {
-  var $flickityReady, $tabs_selector, first_tab_el, io, last_tab_el, selectDestinationTab;
+  var $flickityReady, $tabs_container, $tabs_selector, first_tab_el, io, last_tab_el, selectDestinationTab;
   $('body .subpage-search-bg > .background').append($('#_intro_markup').html());
   $flickityReady = $.Deferred();
   preload('https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.pkgd.min.js', function() {
     return $flickityReady.resolve();
   });
   preload('https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.3/jquery.scrollTo.min.js', function() {
-    return $(document).on('click', '[data-scrollto]', function() {
+    $(document).on('click', '[data-scrollto]', function() {
       return $(window).scrollTo($(this).attr('data-scrollto'), 500, {
         offset: -150
       });
+    });
+    $('.tabs-container .scroll-left').on('click', function() {
+      var $scroll_this;
+      $scroll_this = $('.burning-tours-widget .tabs-selector');
+      return $scroll_this.scrollTo($scroll_this.children(':first'), 500);
+    });
+    return $('.tabs-container .scroll-right').on('click', function() {
+      var $scroll_this;
+      $scroll_this = $('.burning-tours-widget .tabs-selector');
+      return $scroll_this.scrollTo($scroll_this.children(':last'), 500);
     });
   });
   $.when($flickityReady).done(function() {
@@ -267,6 +277,7 @@ ASAP(function() {
     return $('.flickity-enabled').flickity('resize');
   });
   $tabs_selector = $('.burning-tours-widget .tabs-selector');
+  $tabs_container = $tabs_selector.parent();
   first_tab_el = $tabs_selector.children(':first').get(0);
   last_tab_el = $tabs_selector.children(':last').get(0);
   io = new IntersectionObserver(function(entries, observer) {
@@ -275,17 +286,17 @@ ASAP(function() {
     for (i = 0, len1 = entries.length; i < len1; i++) {
       entry = entries[i];
       if (entry.target === first_tab_el) {
-        results.push($tabs_selector.toggleClass('scrollable-left', !entry.isIntersecting));
+        results.push($tabs_container.toggleClass('scrollable-left', !entry.isIntersecting));
       } else if (entry.target === last_tab_el) {
-        results.push($tabs_selector.toggleClass('scrollable-right', !entry.isIntersecting));
+        results.push($tabs_container.toggleClass('scrollable-right', !entry.isIntersecting));
       } else {
         results.push(void 0);
       }
     }
     return results;
   }, {
-    threshold: 1.0,
-    root: $tabs_selector.get(0)
+    threshold: 0.5,
+    root: $tabs_container.get(0)
   });
   io.observe(first_tab_el);
   return io.observe(last_tab_el);

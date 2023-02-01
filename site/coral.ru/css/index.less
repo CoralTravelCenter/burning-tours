@@ -141,7 +141,48 @@
 					width: 100%;
 					.silly-b2c-font-size(@max-font-size: 14px, @mobile-based-font-size: 16px);
 					filter: drop-shadow(0px 20px 60px rgba(0, 0, 0, 0.2));
+					.tabs-container {
+						width: 100%;
+						position: relative;
+						&.scrollable-left {
+							>.scroll-left {
+								pointer-events: auto;
+								opacity: 1;
+							}
+						}
+						&.scrollable-right {
+							>.scroll-right {
+								pointer-events: auto;
+								opacity: 1;
+							}
+						}
+						>.scroll-left, >.scroll-right {
+							.flex-center;
+							line-height: 0;
+							position: absolute;
+							z-index: 1;
+							top: 0;
+							height: 100%;
+							font-size: 1.2em;
+							font-weight: 700;
+							opacity: 0;
+							pointer-events: none;
+							.transit(opacity);
+							cursor: pointer;
+						}
+						>.scroll-left {
+							left: 0;
+							padding: 0 1.5em 0 0.5em;
+							background: linear-gradient(to right, #e6e7e8 70%, fade(#e6e7e8, 0) 100%);
+						}
+						>.scroll-right {
+							right: 0;
+							padding: 0 0.5em 0 1.5em;
+							background: linear-gradient(to left, #e6e7e8 70%, fade(#e6e7e8, 0) 100%);
+						}
+					}
 					ul.tabs-selector {
+						width: 100%;
 						position: relative;
 						overflow: hidden;
 						overflow-x: auto;
@@ -155,20 +196,6 @@
 						font-size: 16/14em;
 						background-color: #e6e7e8;
 						border-radius: 1em 1em 0 0;
-						&.scrollable-left:before {
-							opacity: 1;
-						}
-						&:before {
-							content: '<<';
-							position: absolute;
-							left: 0;
-							top: 0;
-							height: 100%;
-							background: white;
-							opacity: 0;
-							.transit(opacity);
-							pointer-events: none;
-						}
 						>li {
 							position: relative;
 							flex: 1 1 auto;
