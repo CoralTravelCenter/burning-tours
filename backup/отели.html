@@ -1,0 +1,1444 @@
+<div style="max-width: 1370px; margin: 0 auto;">
+<style type="text/css">
+    .reset {
+        position: static;
+        left: auto;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        width: auto;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        -webkit-transform: none;
+        -moz-transform: none;
+        -ms-transform: none;
+        -o-transform: none;
+        transform: none;
+        background: none;
+    }
+    .bbox,
+    .bbox * {
+        box-sizing: border-box;
+    }
+    .interactive {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    .interactive:active {
+        -webkit-transform: translateY(2px);
+        -moz-transform: translateY(2px);
+        -ms-transform: translateY(2px);
+        -o-transform: translateY(2px);
+        transform: translateY(2px);
+    }
+    .abs100x100 {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .centering {
+        display: table !important;
+        width: 100%;
+        height: 100%;
+    }
+    .centering > *:first-child {
+        width: 100%;
+        height: 100%;
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .centering > *:first-child > *:first-child {
+        display: inline-block;
+    }
+    @media screen and (max-width: 768px) {
+        .hidden-on-mobile {
+            display: none !important;
+        }
+    }
+    @media screen and (min-width: 769px) {
+        .hidden-on-desktop {
+            display: none !important;
+        }
+    }
+    .rur:not(:empty):after {
+        content: ' \20BD ';
+    }
+    .rur.per-person:not(:empty):after {
+        content: ' \20BD / чел.';
+    }
+    .flex-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #hotels-set {
+        opacity: 0;
+        transform: translateY(10vh);
+        -webkit-transition: opacity 0.5s, transform 0.5s;
+        -moz-transition: opacity 0.5s, transform 0.5s;
+        -ms-transition: opacity 0.5s, transform 0.5s;
+        -o-transition: opacity 0.5s, transform 0.5s;
+        transition: opacity 0.5s, transform 0.5s;
+        overflow: hidden;
+    }
+    #hotels-set,
+    #hotels-set * {
+        box-sizing: border-box;
+    }
+    #hotels-set .buttonlike {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        outline: none;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        line-height: 1;
+        font-size: inherit;
+        height: 2.6em;
+        padding: 0 2em;
+        border: 0;
+        text-decoration: none;
+        border-radius: 0.25em;
+    }
+    #hotels-set .buttonlike:active {
+        -webkit-transform: translateY(2px);
+        -moz-transform: translateY(2px);
+        -ms-transform: translateY(2px);
+        -o-transform: translateY(2px);
+        transform: translateY(2px);
+    }
+    #hotels-set .buttonlike.transparent {
+        color: inherit;
+        border: 1px solid currentColor;
+    }
+    #hotels-set .buttonlike.yellow {
+        color: white;
+        background-color: #F0AB00;
+    }
+    #hotels-set .buttonlike.white {
+        color: inherit;
+        background-color: white;
+    }
+    #hotels-set .buttonlike.blue {
+        color: white;
+        background-color: #0093D0;
+    }
+    #hotels-set .buttonlike.deepblue {
+        color: white;
+        background-color: #0F2855;
+    }
+    #hotels-set .buttonlike.red {
+        color: white;
+        background-color: #D7232A;
+    }
+    #hotels-set.shown {
+        opacity: 1;
+        transform: none;
+    }
+    #hotels-set .filters-wrap {
+        display: flex;
+        align-items: flex-start;
+        background-color: white;
+        border-radius: 1em;
+        padding: 0.5em;
+    }
+    @media screen and (max-width: 768px) {
+        #hotels-set .filters-wrap {
+            flex-direction: column;
+        }
+    }
+    #hotels-set .filters-wrap > * {
+        flex: 1 1 auto;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    #hotels-set .filters-wrap > * > * {
+        flex: 0 1 auto;
+        margin: 0.5em 0.5em;
+        -webkit-transition: color 0.5s, background 0.5s;
+        -moz-transition: color 0.5s, background 0.5s;
+        -ms-transition: color 0.5s, background 0.5s;
+        -o-transition: color 0.5s, background 0.5s;
+        transition: color 0.5s, background 0.5s;
+        cursor: pointer;
+    }
+    #hotels-set .filters-wrap > * > *:not(.heading) {
+        background-color: #D5E6F0 !important;
+    }
+    #hotels-set .filters-wrap > * > *[data-group='*'] {
+        flex-grow: 1;
+    }
+    #hotels-set .filters-wrap > * > *.selected {
+        pointer-events: none;
+        color: white;
+        background-color: #F0AB00 !important;
+    }
+    #hotels-set .filters-wrap > * .heading {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        line-height: 1;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 80%;
+    }
+    #hotels-set .filters-wrap > * .heading.region:before {
+        content: '';
+        height: 1.5em;
+        width: 1.17857143em;
+        margin-right: 0.7em;
+        background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjMiIGhlaWdodD0iMjgiIHZpZXdCb3g9IjAgMCAyMyAyOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTEwLjE0ODYgMjcuM0M3LjIzMDM4IDIzLjc4OTEgMC41NzQ2OTQgMTUuMjc5NyAwLjU3NDY5NCAxMC41QzAuNTc0Njk0IDQuNzAwOTQgNS40NjY5MSAwIDExLjQ5NjkgMEMxNy41MjkxIDAgMjIuNDE5IDQuNzAwOTQgMjIuNDE5IDEwLjVDMjIuNDE5IDE1LjI3OTcgMTUuODE0NSAyMy43ODkxIDEyLjg0NTEgMjcuM0MxMi4xNDU0IDI4LjEzNjcgMTAuODQ4MyAyOC4xMzY3IDEwLjE0ODYgMjcuM1pNMTEuNDk4NCAyNS43OTQzQzEyLjk1OTQgMjQuMDUyOSAxNS4xODI4IDIxLjIzNTkgMTcuMDYwNCAxOC4yOTg2QzE4LjAzOTIgMTYuNzY3NSAxOC44OTg4IDE1LjI0MjUgMTkuNTA3NyAxMy44NDc2QzIwLjEzMTYgMTIuNDE4MiAyMC40MTkgMTEuMjg4NSAyMC40MTkgMTAuNUMyMC40MTkgNS44NzkwOCAxNi40OTk1IDIgMTEuNDk2OSAyQzYuNDk2MTcgMiAyLjU3NDY5IDUuODc5MzQgMi41NzQ2OSAxMC41QzIuNTc0NjkgMTEuMjg1NiAyLjg2MzQ3IDEyLjQxMzUgMy40OTE0NiAxMy44NDM2QzQuMTA0MTEgMTUuMjM4NyA0Ljk2ODQgMTYuNzY0IDUuOTUwOTEgMTguMjk2MkM3LjgzMTM2IDIxLjIyODcgMTAuMDUwOSAyNC4wNDE4IDExLjQ5ODQgMjUuNzk0M1pNNS44NTYxMyAxMC41QzUuODU2MTMgMTMuNjA4NiA4LjQ1OTIzIDE2IDExLjQ5NjkgMTZDMTQuNTM0NSAxNiAxNy4xMzc2IDEzLjYwODYgMTcuMTM3NiAxMC41QzE3LjEzNzYgNy4zOTEzOSAxNC41MzQ1IDUgMTEuNDk2OSA1QzguNDU5MjMgNSA1Ljg1NjEzIDcuMzkxMzkgNS44NTYxMyAxMC41Wk03Ljg1NjEzIDEwLjVDNy44NTYxMyAxMi40MzA1IDkuNDg4NzcgMTQgMTEuNDk2OSAxNEMxMy41MDQ5IDE0IDE1LjEzNzYgMTIuNDMwNSAxNS4xMzc2IDEwLjVDMTUuMTM3NiA4LjU2OTUzIDEzLjUwNDkgNyAxMS40OTY5IDdDOS40ODg3NyA3IDcuODU2MTMgOC41Njk1MyA3Ljg1NjEzIDEwLjVaIiBmaWxsPSJibGFjayIvPjwvc3ZnPgo=") center no-repeat;
+        background-size: contain;
+    }
+    #hotels-set .filters-wrap > * .heading.month:before {
+        content: '';
+        height: 1.5em;
+        width: 1.39285714em;
+        margin-right: 0.7em;
+        background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjciIGhlaWdodD0iMjgiIHZpZXdCb3g9IjAgMCAyNyAyOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjMuODEzNSAyNy44MTY3SDMuOTc0MTJDMi4yNzU3NiAyNy44MTY3IDAuODkzNzk5IDI2LjQzNDggMC44OTM3OTkgMjQuNzM2NFY0Ljg5NzA2QzAuODkzNzk5IDMuMTk2NjYgMi4yNzU3NiAxLjgxNDcgMy45NzQxMiAxLjgxNDdIMjMuODEzNUMyNS41MTE4IDEuODE0NyAyNi44OTM4IDMuMTk2NjYgMjYuODkzOCA0Ljg5NTAxVjI0LjczNjRDMjYuODkzOCAyNi40MzQ4IDI1LjUxMTggMjcuODE2NyAyMy44MTM1IDI3LjgxNjdaTTIuMzIyNzEgMjMuMDg1VjI0LjczNjRDMi4zMjI3MSAyNS42NDY4IDMuMDYzNyAyNi4zODc4IDMuOTc0MTIgMjYuMzg3OEgyMy44MTM1QzI0LjcyMzkgMjYuMzg3OCAyNS40NjQ5IDI1LjY0NjggMjUuNDY0OSAyNC43MzY0VjQuODk3MDZDMjUuNDY0OSAzLjk4NjY0IDI0LjcyMzkgMy4yNDU2NSAyMy44MTM1IDMuMjQ1NjVIMy45NzQxMkMzLjA2MzcgMy4yNDU2NSAyLjMyMjcxIDMuOTg2NjQgMi4zMjI3MSA0Ljg5NzA2VjIzLjA4NVoiIGZpbGw9ImJsYWNrIi8+PHBhdGggZD0iTTI2LjE4MTMgNi44NDg1NEgxLjYwODE1VjguMjc3NDVIMjYuMTgxM1Y2Ljg0ODU0WiIgZmlsbD0iYmxhY2siLz48cGF0aCBkPSJNNi43NTAzNCA1LjA2MDM4QzYuMzU2MzcgNS4wNjAzOCA2LjAzNTg5IDQuNzM5ODkgNi4wMzU4OSA0LjM0NTkyVjAuNzE0NDU0QzYuMDM1ODkgMC4zMjA0ODQgNi4zNTYzNyAwIDYuNzUwMzQgMEM3LjE0NDMxIDAgNy40NjQ4IDAuMzIwNDg0IDcuNDY0OCAwLjcxNDQ1NFY0LjM0NTkyQzcuNDY0OCA0LjczOTg5IDcuMTQ0MzEgNS4wNjAzOCA2Ljc1MDM0IDUuMDYwMzhWNS4wNjAzOFoiIGZpbGw9ImJsYWNrIi8+PHBhdGggZD0iTTIxLjAzOTQgNS4wNjAzOEMyMC42NDU0IDUuMDYwMzggMjAuMzI1IDQuNzM5ODkgMjAuMzI1IDQuMzQ1OTJWMC43MTQ0NTRDMjAuMzI1IDAuMzIwNDg0IDIwLjY0NTQgMCAyMS4wMzk0IDBDMjEuNDMzNCAwIDIxLjc1MzkgMC4zMjA0ODQgMjEuNzUzOSAwLjcxNDQ1NFY0LjM0NTkyQzIxLjc1MzkgNC43Mzk4OSAyMS40MzM0IDUuMDYwMzggMjEuMDM5NCA1LjA2MDM4WiIgZmlsbD0iYmxhY2siLz48cGF0aCBkPSJNMjIuMTM1NCAxNi4zNzEySDE5Ljk0MUMxOS4xMzg4IDE2LjM3MTIgMTguNDg1NiAxNS43MTggMTguNDg1NiAxNC45MTU4VjEyLjcyMTRDMTguNDg1NiAxMS45MTkxIDE5LjEzODggMTEuMjY1OSAxOS45NDEgMTEuMjY1OUgyMi4xMzU0QzIyLjkzNzcgMTEuMjY1OSAyMy41OTA5IDExLjkxOTEgMjMuNTkwOSAxMi43MjE0VjE0LjkxNThDMjMuNTkwOSAxNS43MTggMjIuOTM3NyAxNi4zNzEyIDIyLjEzNTQgMTYuMzcxMlpNMTkuOTQxIDEyLjY5MjhDMTkuOTI2OCAxMi42OTI4IDE5LjkxNDUgMTIuNzA1IDE5LjkxNDUgMTIuNzE5M1YxNC45MTM3QzE5LjkxNDUgMTQuOTI4IDE5LjkyNjggMTQuOTQwMyAxOS45NDEgMTQuOTQwM0gyMi4xMzU0QzIyLjE0OTcgMTQuOTQwMyAyMi4xNjIgMTQuOTI4IDIyLjE2MiAxNC45MTM3VjEyLjcxOTNDMjIuMTYyIDEyLjcwNSAyMi4xNDk3IDEyLjY5MjggMjIuMTM1NCAxMi42OTI4SDE5Ljk0MVYxMi42OTI4WiIgZmlsbD0iYmxhY2siLz48cGF0aCBkPSJNMTQuOTkxIDE2LjM3MTJIMTIuNzk2NkMxMS45OTQ0IDE2LjM3MTIgMTEuMzQxMiAxNS43MTggMTEuMzQxMiAxNC45MTU4VjEyLjcyMTRDMTEuMzQxMiAxMS45MTkxIDExLjk5NDQgMTEuMjY1OSAxMi43OTY2IDExLjI2NTlIMTQuOTkxQzE1Ljc5MzMgMTEuMjY1OSAxNi40NDY1IDExLjkxOTEgMTYuNDQ2NSAxMi43MjE0VjE0LjkxNThDMTYuNDQ2NSAxNS43MTggMTUuNzkzMyAxNi4zNzEyIDE0Ljk5MSAxNi4zNzEyWk0xMi43OTY2IDEyLjY5MjhDMTIuNzgyMyAxMi42OTI4IDEyLjc3MDEgMTIuNzA1IDEyLjc3MDEgMTIuNzE5M1YxNC45MTM3QzEyLjc3MDEgMTQuOTI4IDEyLjc4MjMgMTQuOTQwMyAxMi43OTY2IDE0Ljk0MDNIMTQuOTkxQzE1LjAwNTMgMTQuOTQwMyAxNS4wMTc2IDE0LjkyOCAxNS4wMTc2IDE0LjkxMzdWMTIuNzE5M0MxNS4wMTc2IDEyLjcwNSAxNS4wMDUzIDEyLjY5MjggMTQuOTkxIDEyLjY5MjhIMTIuNzk2NlYxMi42OTI4WiIgZmlsbD0iYmxhY2siLz48cGF0aCBkPSJNNy44NDYzNyAyMy43MjZINS42NTE5OEM0Ljg0OTc1IDIzLjcyNiA0LjE5NjUzIDIzLjA3MjggNC4xOTY1MyAyMi4yNzA2VjIwLjA3NjJDNC4xOTY1MyAxOS4yNzM5IDQuODQ5NzUgMTguNjIwNyA1LjY1MTk4IDE4LjYyMDdINy44NDYzN0M4LjY0ODYgMTguNjIwNyA5LjMwMTgyIDE5LjI3MzkgOS4zMDE4MiAyMC4wNzYyVjIyLjI3MDZDOS4zMDE4MiAyMy4wNzI4IDguNjQ4NiAyMy43MjYgNy44NDYzNyAyMy43MjZaTTUuNjUxOTggMjAuMDQ3NkM1LjYzNzY5IDIwLjA0NzYgNS42MjU0NCAyMC4wNTk4IDUuNjI1NDQgMjAuMDc0MVYyMi4yNjg1QzUuNjI1NDQgMjIuMjgyOCA1LjYzNzY5IDIyLjI5NTEgNS42NTE5OCAyMi4yOTUxSDcuODQ2MzdDNy44NjA2NiAyMi4yOTUxIDcuODcyOTEgMjIuMjgyOCA3Ljg3MjkxIDIyLjI2ODVWMjAuMDc0MUM3Ljg3MjkxIDIwLjA1OTggNy44NjA2NiAyMC4wNDc2IDcuODQ2MzcgMjAuMDQ3Nkg1LjY1MTk4WiIgZmlsbD0iYmxhY2siLz48cGF0aCBkPSJNMjIuMTM1NCAyMy43MjZIMTkuOTQxQzE5LjEzODggMjMuNzI2IDE4LjQ4NTYgMjMuMDcyOCAxOC40ODU2IDIyLjI3MDZWMjAuMDc2MkMxOC40ODU2IDE5LjI3MzkgMTkuMTM4OCAxOC42MjA3IDE5Ljk0MSAxOC42MjA3SDIyLjEzNTRDMjIuOTM3NyAxOC42MjA3IDIzLjU5MDkgMTkuMjczOSAyMy41OTA5IDIwLjA3NjJWMjIuMjcwNkMyMy41OTA5IDIzLjA3MjggMjIuOTM3NyAyMy43MjYgMjIuMTM1NCAyMy43MjZaTTE5Ljk0MSAyMC4wNDc2QzE5LjkyNjggMjAuMDQ3NiAxOS45MTQ1IDIwLjA1OTggMTkuOTE0NSAyMC4wNzQxVjIyLjI2ODVDMTkuOTE0NSAyMi4yODI4IDE5LjkyNjggMjIuMjk1MSAxOS45NDEgMjIuMjk1MUgyMi4xMzU0QzIyLjE0OTcgMjIuMjk1MSAyMi4xNjIgMjIuMjgyOCAyMi4xNjIgMjIuMjY4NVYyMC4wNzQxQzIyLjE2MiAyMC4wNTk4IDIyLjE0OTcgMjAuMDQ3NiAyMi4xMzU0IDIwLjA0NzZIMTkuOTQxWiIgZmlsbD0iYmxhY2siLz48cGF0aCBkPSJNMTQuOTkxIDIzLjcyNkgxMi43OTY2QzExLjk5NDQgMjMuNzI2IDExLjM0MTIgMjMuMDcyOCAxMS4zNDEyIDIyLjI3MDZWMjAuMDc2MkMxMS4zNDEyIDE5LjI3MzkgMTEuOTk0NCAxOC42MjA3IDEyLjc5NjYgMTguNjIwN0gxNC45OTFDMTUuNzkzMyAxOC42MjA3IDE2LjQ0NjUgMTkuMjczOSAxNi40NDY1IDIwLjA3NjJWMjIuMjcwNkMxNi40NDY1IDIzLjA3MjggMTUuNzkzMyAyMy43MjYgMTQuOTkxIDIzLjcyNlpNMTIuNzk2NiAyMC4wNDc2QzEyLjc4MjMgMjAuMDQ3NiAxMi43NzAxIDIwLjA1OTggMTIuNzcwMSAyMC4wNzQxVjIyLjI2ODVDMTIuNzcwMSAyMi4yODI4IDEyLjc4MjMgMjIuMjk1MSAxMi43OTY2IDIyLjI5NTFIMTQuOTkxQzE1LjAwNTMgMjIuMjk1MSAxNS4wMTc2IDIyLjI4MjggMTUuMDE3NiAyMi4yNjg1VjIwLjA3NDFDMTUuMDE3NiAyMC4wNTk4IDE1LjAwNTMgMjAuMDQ3NiAxNC45OTEgMjAuMDQ3NkgxMi43OTY2WiIgZmlsbD0iYmxhY2siLz48cGF0aCBkPSJNNi41NDYxOCAxNS45NjNDNi4zNzQ3MSAxNS45NjMgNi4yMDczMiAxNS44OTk3IDYuMDc0NjQgMTUuNzg1NEw0LjQzOTU2IDE0LjM1NDRDNC4xNDM1NyAxNC4wOTUyIDQuMTEyOTUgMTMuNjQ0MSA0LjM3MjE5IDEzLjM0NkM0LjYzMTQ0IDEzLjA1IDUuMDgyNTcgMTMuMDE5NCA1LjM4MDYgMTMuMjc4N0w2LjQ0MDAzIDE0LjIwNzVMOC4yMjQxMiAxMS44NzgzQzguNDYyOTUgMTEuNTY2IDguOTEyMDQgMTEuNTA0OCA5LjIyNjQgMTEuNzQ1NkM5LjUzODcyIDExLjk4NDUgOS41OTk5NiAxMi40MzM2IDkuMzU5MDggMTIuNzQ3OUw3LjExMTYxIDE1LjY4MzNDNi45OTExOCAxNS44NDA1IDYuODExNTQgMTUuOTQwNSA2LjYxNTU4IDE1Ljk2MDlDNi41OTEwOCAxNS45NjMgNi41Njg2MyAxNS45NjUgNi41NDQxMyAxNS45NjVMNi41NDYxOCAxNS45NjNaIiBmaWxsPSJibGFjayIvPjwvc3ZnPgo=") center no-repeat;
+        background-size: contain;
+    }
+    #hotels-set .month-filters:not(:first-child) {
+        margin-left: 1em;
+    }
+    @media screen and (max-width: 768px) {
+        #hotels-set .month-filters:not(:first-child) {
+            margin-left: 0;
+            margin-top: 1em;
+        }
+    }
+    #hotels-set .cards-grid .card-cell {
+        display: flex;
+        flex-direction: column;
+        width: 25%;
+        padding: 1em;
+        min-height: 0;
+    }
+    @media screen and (max-width: 1280px) {
+        #hotels-set .cards-grid .card-cell {
+            width: 33.33333333%;
+        }
+    }
+    @media screen and (max-width: 768px) {
+        #hotels-set .cards-grid .card-cell {
+            width: 50%;
+        }
+    }
+    @media screen and (max-width: 576px) {
+        #hotels-set .cards-grid .card-cell {
+            width: 100%;
+        }
+    }
+    #hotels-set .cards-grid .card-cell > .pad {
+        position: relative;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: white;
+        border-radius: 1em;
+        overflow: hidden;
+        padding-bottom: 1.5em;
+    }
+    #hotels-set .cards-grid .card-cell > .pad > * {
+        max-width: 100%;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .visual {
+        width: 100%;
+        position: relative;
+        background: center no-repeat;
+        background-size: cover;
+        border-radius: 1em;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .visual:before {
+        content: '';
+        display: block;
+        padding-top: 56.25%;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .visual > * {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .visual [is="hotel-stars"] {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        filter: drop-shadow(0px -2px 2px #0093D0);
+    }
+    #hotels-set .cards-grid .card-cell > .pad .visual [is="hotel-stars"] .star {
+        width: 1.5em;
+        height: 100%;
+        margin: 0 2px;
+        background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjkiIGhlaWdodD0iMjkiIHZpZXdCb3g9IjAgMCAyOSAyOSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTkuNjEwMiA4LjIyMDIxTDI3LjUwMTEgOS4zNzk0NUMyNy44MjMzIDkuNDI2NDIgMjguMTI2IDkuNTYxOCAyOC4zNzUyIDkuNzcwNDFDMjguNjI0NSA5Ljk3OTAyIDI4LjgxMDUgMTAuMjUyNiAyOC45MTI0IDEwLjU2MDZDMjkuMDE0MiAxMC44NzAyIDI5LjAyNzUgMTEuMjAxOSAyOC45NTA5IDExLjUxODZDMjguODc0MyAxMS44MzUzIDI4LjcxMDggMTIuMTI0NiAyOC40Nzg2IDEyLjM1NDFMMjIuNzU2NyAxNy45NDI1TDI0LjEwNzUgMjUuOTU4N0MyNC4xNjI2IDI2LjI4MTUgMjQuMTI1NCAyNi42MTMxIDI0LjAwMDIgMjYuOTE1OEMyMy44NzQ5IDI3LjIxODUgMjMuNjY2NiAyNy40Nzk5IDIzLjM5OTIgMjcuNjcwM0MyMy4xMzMgMjcuODYwNyAyMi44MTg4IDI3Ljk3MzMgMjIuNDkxOCAyNy45OTU1QzIyLjE2NDkgMjguMDE3NyAyMS44MzgyIDI3Ljk0ODcgMjEuNTQ4NiAyNy43OTZMMTQuNDk3OCAyNC4wNTMxTDcuNDUyNDYgMjcuNzk4OEM3LjE2MTg3IDI3Ljk1MTUgNi44MzQzMiAyOC4wMjA2IDYuNTA2NDkgMjcuOTk4NEM2LjE3ODY3IDI3Ljk3NjIgNS44NjM1NCAyNy44NjM1IDUuNTk2NDEgMjcuNjczQzUuMzI5NjUgMjcuNDgyMiA1LjEyMjI0IDI3LjIyMDUgNC45OTc5MyAyNi45MTc4QzQuODczNjIgMjYuNjE1MSA0LjgzNzQ0IDI2LjI4MzcgNC44OTM1MiAyNS45NjE1TDYuMjQ0MzggMTcuOTQ1MkwwLjUyMDgxNCAxMi4zNTQxQzAuMjg4ODI0IDEyLjEyNDUgMC4xMjU0NjcgMTEuODM1MiAwLjA0ODk2MzggMTEuNTE4NUMtMC4wMjc1Mzk3IDExLjIwMTggLTAuMDE0MTgyMSAxMC44NzAxIDAuMDg3NTUxIDEwLjU2MDZDMC4xODg5MDggMTAuMjUyIDAuMzc0OTU4IDkuOTc3ODYgMC42MjQ2NTQgOS43NjkxM0MwLjg3NDM1IDkuNTYwNCAxLjE3NzczIDkuNDI1NDEgMS41MDA0NiA5LjM3OTQ1TDkuMzg0ODUgOC4yMjAyMUwxMi45MjEyIDAuOTg0MjY1QzEzLjA2NDQgMC42ODkyNjIgMTMuMjg4MyAwLjQ0MDQzNiAxMy41NjcgMC4yNjYzNDJDMTMuODQ1OCAwLjA5MjI0ODEgMTQuMTY4MiAtNi4wNjA4OWUtMDUgMTQuNDk3MiA1LjY2NzUzZS0wNkMxNC44MjcyIC0wLjAwMDgzMTUyMyAxNS4xNTA2IDAuMDkxMDk3NiAxNS40MzA0IDAuMjY1MjIxQzE1LjcxMDIgMC40MzkzNDQgMTUuOTM0OSAwLjY4ODU4NiAxNi4wNzg3IDAuOTg0MjY1TDE5LjYxMDIgOC4yMjAyMVoiIGZpbGw9IiNGMEFCMDAiLz48L3N2Zz4K") center no-repeat;
+        background-size: contain;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .visual [is="hotel-stars"]:not([data-category*='*']) {
+        filter: none;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .visual [is="hotel-stars"]:not([data-category*='*']):after {
+        content: attr(data-category);
+        font-size: 1.2em;
+        font-weight: bold;
+        letter-spacing: 0.05em;
+        color: #F0AB00;
+        padding: 0 0.5em;
+        border-radius: 3px;
+        background: white;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .visual .trait {
+        height: 1.5em;
+        top: 100%;
+        transform: translateY(-60%);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: auto 100%;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info {
+        width: 100%;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 2em;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info > * {
+        max-width: 100%;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info > *:nth-child(n+2) {
+        margin-top: 1em;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info h3 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2em;
+        line-height: 1.1;
+        height: 2.2em;
+        text-align: inherit;
+        margin: 0;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info h4 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 1.2;
+        text-align: inherit;
+        margin: 0;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .benefits {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        font-weight: normal;
+        margin-bottom: auto;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .benefits > * {
+        max-width: 100%;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .benefits > * {
+        display: flex;
+        font-size: 13px;
+        line-height: 1.1;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .benefits > *:nth-child(n+2) {
+        margin-top: 0.25em;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .benefits > *:before {
+        content: '\25CF';
+        margin-right: 0.5em;
+        color: #F0AB00;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .terms {
+        font-weight: normal;
+        line-height: 1;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .terms .term-badge {
+        flex: 0 1 auto;
+        display: inline-flex;
+        align-items: center;
+        font-size: 11px;
+        line-height: 1;
+        margin: 2px;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .terms .term-badge .icon {
+        position: relative;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.2em;
+        height: 2.2em;
+        background-color: #ebf9ff;
+        color: #0093D0;
+        font-weight: bold;
+        border-radius: 3px;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .terms .term-badge .icon:before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .terms .term-badge .label {
+        display: inline-flex;
+        align-items: center;
+        text-align: left;
+        height: 2.2em;
+        padding: 0 0.5em;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .terms .term-badge.depart-from .icon:before {
+        content: '';
+        background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTM1IiBoZWlnaHQ9Ijg3IiB2aWV3Qm94PSIwIDAgMTM1IDg3IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMzQuNDUxIDEzLjE2OTJDMTM0IDEyLjA5MzQgMTMzLjI5IDExLjEzOTEgMTMyLjMxOSAxMC4zMDYzQzEzMS4zNDkgOS40NzM0NyAxMzAuMjA1IDguODE0MTUgMTI4Ljg4OCA4LjMyODMzQzEyNy41NzEgNy44MDc4MSAxMjYuMTY3IDcuNTEyODUgMTI0LjY3NiA3LjQ0MzQ0QzEyMy4yMjEgNy4zNzQwNCAxMjEuNzk5IDcuNTEyODQgMTIwLjQxMyA3Ljg1OTg2TDg5LjU4MTkgMTUuNjE1NkwzNC40NzA2IDBMMjAuNjkyNyA1LjIwNTJMNjIuMDI2MiAyNi4wMjZMMzQuNDcwNiAzNi40MzY0TDYuOTE0OTEgMjYuMDI2TDAgMzEuMjMxMkwyNy41NTU3IDUyTDEyNy43OTYgMjMuNjMxNkMxMjkuMTEzIDIzLjI4NDYgMTMwLjMwOSAyMi43NDY3IDEzMS4zODMgMjIuMDE4QzEzMi40NTggMjEuMjU0NiAxMzMuMzA3IDIwLjM4NzEgMTMzLjkzMSAxOS40MTU0QzEzNC41NTUgMTguNDQzOCAxMzQuOTAxIDE3LjQyMDEgMTM0Ljk3MSAxNi4zNDQzQzEzNS4wNzUgMTUuMjMzOSAxMzQuOTAxIDE0LjE3NTUgMTM0LjQ1MSAxMy4xNjkyWiIgZmlsbD0iIzAwOTNEMCIvPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTM1IDg3SDBWODNIMTM1Vjg3WiIgZmlsbD0iIzAwOTNEMCIvPjwvc3ZnPgo=") center no-repeat;
+        background-size: 62%;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .terms .term-badge.depart-date .icon:before {
+        content: '';
+        background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjciIGhlaWdodD0iNzUiIHZpZXdCb3g9IjAgMCA2NyA3NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTUuNTkyMSAwSDEzLjcwODdDMTMuNDY4MyAwIDEzLjI0MDQgMC4wNTA0OTk4IDEzLjAxOTYgMC4xMjIyNTZDMTEuOTE2NCAwLjQ4MDA1NSAxMS4xMDA5IDEuNjU3ODkgMTEuMTAwOSAzLjA3MDc4VjQuMzY3MzFWNy42ODU5MlY5LjQxMjQ5QzExLjEwMDkgOS43MzMzMSAxMS4xNTQzIDEwLjAzNjQgMTEuMjMxOCAxMC4zMjY2QzExLjU2MzggMTEuNTczMyAxMi41NDA4IDEyLjQ4MzMgMTMuNzA4NyAxMi40ODMzSDE1LjU5MjFDMTcuMDMyNyAxMi40ODMzIDE4LjE5OTkgMTEuMTA4NiAxOC4xOTk5IDkuNDEyNDlWNy42ODU5MlY0LjM2NzMxVjMuMDcwNzhDMTguMTk5OSAxLjM3NDY3IDE3LjAzMjcgMCAxNS41OTIxIDBaIiBmaWxsPSIjMDA5M0QwIi8+PHBhdGggZD0iTTUyLjY2NDcgMEg1MC43ODEzQzQ5LjM0MDcgMCA0OC4xNzM0IDEuMzc0NjcgNDguMTczNCAzLjA3MDc4VjQuMzY3MzFWNy42ODU5MlY5LjQxMjQ5QzQ4LjE3MzQgMTEuMTA4NiA0OS4zNDA3IDEyLjQ4MzMgNTAuNzgxMyAxMi40ODMzSDUyLjY2NDdDNTQuMTA1MyAxMi40ODMzIDU1LjI3MjUgMTEuMTA4NiA1NS4yNzI1IDkuNDEyNDlWNy42ODU5MlY0LjM2NzMxVjMuMDcwNzhDNTUuMjcxOSAxLjM3NDY3IDU0LjEwNDcgMCA1Mi42NjQ3IDBaIiBmaWxsPSIjMDA5M0QwIi8+PHBhdGggZD0iTTYyLjI4NTIgNy42ODU5MUg1Ny42MjE4VjkuNDEyNDlDNTcuNjIxOCAxMi40MDE2IDU1LjM5NzYgMTQuODMzMiA1Mi42NjQxIDE0LjgzMzJINTAuNzgwNkM0OC4wNDcxIDE0LjgzMzIgNDUuODIyOSAxMi40MDE2IDQ1LjgyMjkgOS40MTI0OVY3LjY4NTkxSDIwLjU0OThWOS40MTI0OUMyMC41NDk4IDEyLjQwMTYgMTguMzI1NiAxNC44MzMyIDE1LjU5MjEgMTQuODMzMkgxMy43MDg3QzEwLjk3NSAxNC44MzMyIDguNzUwOTYgMTIuNDAxNiA4Ljc1MDk2IDkuNDEyNDlWNy42ODU5MUg0LjY4NzUxQzIuMDk5MTIgNy42ODU5MSAwIDkuNjUzOTMgMCAxMi4wODAzVjcwLjYwNTdDMCA3My4wMzY1IDIuMDk5IDc1IDQuNjg3NTEgNzVINjIuMjg0NkM2NC44NzU0IDc1IDY2Ljk3MiA3My4wMzYgNjYuOTcyIDcwLjYwNTdWMTIuMDgwOUM2Ni45NzI2IDkuNjU0NTQgNjQuODc2IDcuNjg1OTEgNjIuMjg1MiA3LjY4NTkxWk02MC44MzE4IDY4LjU0OTRMNS45Njk5MSA2OC41MjgzVjIxLjM0NDdINjAuODMxOFY2OC41NDk0WiIgZmlsbD0iIzAwOTNEMCIvPjxwYXRoIGQ9Ik0zOS4zNjE0IDMyLjcxNTNINTMuNzg5OUM1NS4wNDIzIDMyLjcxNTMgNTYuMDU1MiAzMS40NjQ2IDU2LjA1NTIgMjkuOTE4OEM1Ni4wNTUyIDI4LjM3MzEgNTUuMDQxOCAyNy4xMjI0IDUzLjc4OTkgMjcuMTIyNEgzOS4zNjE0QzM4LjEwOSAyNy4xMjI0IDM3LjA5NjEgMjguMzczMSAzNy4wOTYxIDI5LjkxODhDMzcuMDk2MSAzMS40NjM5IDM4LjEwODkgMzIuNzE1MyAzOS4zNjE0IDMyLjcxNTNaIiBmaWxsPSIjMDA5M0QwIi8+PHBhdGggZD0iTTM5LjM2MTQgNDIuODE2M0g1My43ODk5QzU1LjA0MjMgNDIuODE2MyA1Ni4wNTUyIDQxLjU2NTYgNTYuMDU1MiA0MC4wMTk5QzU2LjA1NTIgMzguNDc0MyA1NS4wNDE4IDM3LjIyMzYgNTMuNzg5OSAzNy4yMjM2SDM5LjM2MTRDMzguMTA5IDM3LjIyMzYgMzcuMDk2MSAzOC40NzQzIDM3LjA5NjEgNDAuMDE5OUMzNy4wOTYxIDQxLjU2NTYgMzguMTA4OSA0Mi44MTYzIDM5LjM2MTQgNDIuODE2M1oiIGZpbGw9IiMwMDkzRDAiLz48cGF0aCBkPSJNMzkuMzYxNCA1Mi45MTczSDUzLjc4OTlDNTUuMDQyMyA1Mi45MTczIDU2LjA1NTIgNTEuNjY2NSA1Ni4wNTUyIDUwLjEyMDlDNTYuMDU1MiA0OC41NzUzIDU1LjA0MTggNDcuMzI0NSA1My43ODk5IDQ3LjMyNDVIMzkuMzYxNEMzOC4xMDkgNDcuMzI0NSAzNy4wOTYxIDQ4LjU3NTMgMzcuMDk2MSA1MC4xMjA5QzM3LjA5NjEgNTEuNjY2NSAzOC4xMDg5IDUyLjkxNzMgMzkuMzYxNCA1Mi45MTczWiIgZmlsbD0iIzAwOTNEMCIvPjxwYXRoIGQ9Ik0zOS4zNjE0IDYzLjAxOUg1My43ODk5QzU1LjA0MjMgNjMuMDE5IDU2LjA1NTIgNjEuNzY4MiA1Ni4wNTUyIDYwLjIyMjZDNTYuMDU1MiA1OC42NzY5IDU1LjA0MTggNTcuNDI2MiA1My43ODk5IDU3LjQyNjJIMzkuMzYxNEMzOC4xMDkgNTcuNDI2MiAzNy4wOTYxIDU4LjY3NjkgMzcuMDk2MSA2MC4yMjI2QzM3LjA5NjEgNjEuNzY4MiAzOC4xMDg5IDYzLjAxOSAzOS4zNjE0IDYzLjAxOVoiIGZpbGw9IiMwMDkzRDAiLz48cGF0aCBkPSJNMTMuODA2MiAzMi43MTUzSDI4LjIzNDZDMjkuNDg3MSAzMi43MTUzIDMwLjQ5OTkgMzEuNDY0NiAzMC40OTk5IDI5LjkxODhDMzAuNDk5OSAyOC4zNzMxIDI5LjQ4NjQgMjcuMTIyNCAyOC4yMzQ2IDI3LjEyMjRIMTMuODA2MkMxMi41NTM3IDI3LjEyMjQgMTEuNTQwOCAyOC4zNzMxIDExLjU0MDggMjkuOTE4OEMxMS41NDEgMzEuNDYzOSAxMi41NTM3IDMyLjcxNTMgMTMuODA2MiAzMi43MTUzWiIgZmlsbD0iIzAwOTNEMCIvPjxwYXRoIGQ9Ik0xMy44MDYyIDQyLjgxNjNIMjguMjM0NkMyOS40ODcxIDQyLjgxNjMgMzAuNDk5OSA0MS41NjU2IDMwLjQ5OTkgNDAuMDE5OUMzMC40OTk5IDM4LjQ3NDMgMjkuNDg2NCAzNy4yMjM2IDI4LjIzNDYgMzcuMjIzNkgxMy44MDYyQzEyLjU1MzcgMzcuMjIzNiAxMS41NDA4IDM4LjQ3NDMgMTEuNTQwOCA0MC4wMTk5QzExLjU0MSA0MS41NjU2IDEyLjU1MzcgNDIuODE2MyAxMy44MDYyIDQyLjgxNjNaIiBmaWxsPSIjMDA5M0QwIi8+PHBhdGggZD0iTTEzLjgwNjIgNTIuOTE3M0gyOC4yMzQ2QzI5LjQ4NzEgNTIuOTE3MyAzMC40OTk5IDUxLjY2NjUgMzAuNDk5OSA1MC4xMjA5QzMwLjQ5OTkgNDguNTc1MyAyOS40ODY0IDQ3LjMyNDUgMjguMjM0NiA0Ny4zMjQ1SDEzLjgwNjJDMTIuNTUzNyA0Ny4zMjQ1IDExLjU0MDggNDguNTc1MyAxMS41NDA4IDUwLjEyMDlDMTEuNTQwOCA1MS42NjY1IDEyLjU1MzcgNTIuOTE3MyAxMy44MDYyIDUyLjkxNzNaIiBmaWxsPSIjMDA5M0QwIi8+PHBhdGggZD0iTTEzLjgwNjIgNjMuMDE5SDI4LjIzNDZDMjkuNDg3MSA2My4wMTkgMzAuNDk5OSA2MS43NjgyIDMwLjQ5OTkgNjAuMjIyNkMzMC40OTk5IDU4LjY3NjkgMjkuNDg2NCA1Ny40MjYyIDI4LjIzNDYgNTcuNDI2MkgxMy44MDYyQzEyLjU1MzcgNTcuNDI2MiAxMS41NDA4IDU4LjY3NjkgMTEuNTQwOCA2MC4yMjI2QzExLjU0MSA2MS43NjgyIDEyLjU1MzcgNjMuMDE5IDEzLjgwNjIgNjMuMDE5WiIgZmlsbD0iIzAwOTNEMCIvPjwvc3ZnPgo=") center no-repeat;
+        background-size: 50%;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .terms .term-badge.meal .icon:before {
+        content: '';
+        background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDUiIGhlaWdodD0iNDMiIHZpZXdCb3g9IjAgMCA0NSA0MyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNDMuNjkwMiAzLjczNDM3QzQzLjI1IDMuMjk0MSA0Mi42NjQ0IDMuMDEyNjkgNDIuMDQ3MSAyLjk1MzY5QzQwLjg5ODggMi44NDAyMSAzNy43NTM0IDQuNjc4NDYgMzUuOTgzMiA1Ljc4NTk1QzMzLjQ0NiA3LjM3MDAyIDI5LjYyNDIgMTAuMDU3IDI1LjgyOTcgMTMuODUxNkwxNy41MjM1IDIyLjE1MzJDMTYuNDY2IDIzLjIxMDggMTYuNDY2IDI0LjkzMSAxNy41MjM1IDI1Ljk4ODZMMTcuNTY0NCAyNi4wMjQ5TDYuMTY3MjIgMzcuNDIyQzUuMTA5NjYgMzguNDc5NiA1LjEwOTY2IDQwLjE5OTggNi4xNjcyMiA0MS4yNTc0QzcuMjI0NzkgNDIuMzE0OSA4Ljk0NTAzIDQyLjMxNDkgMTAuMDAyNiA0MS4yNTc0TDQzLjY5MDIgNy41Njk3NEM0NC40MjU1IDYuODM0NDQgNDQuNjc1MiA1LjcyMjQxIDQ0LjMyNTcgNC43NDIwMUM0NC4xOTg2IDQuMzY1MjggNDMuOTc2MiA0LjAxNTc5IDQzLjY5MDIgMy43MzQzN1oiIGZpbGw9IiMwMDkzRDAiLz48cGF0aCBkPSJNMjguNzk4MSAyNS4yMzA1TDI0Ljk2MjggMjkuMDY1OUwzNi44NzI4IDQwLjk3NTlDMzcuOTMwNCA0Mi4wMzM1IDM5LjY1MDYgNDIuMDMzNSA0MC43MDM2IDQwLjk3NTlDNDEuNzYxMiAzOS45MTg0IDQxLjc2MTIgMzguMTk4MSA0MC43MDM2IDM3LjE0MDZMMjguNzk4MSAyNS4yMzA1WiIgZmlsbD0iIzAwOTNEMCIvPjxwYXRoIGQ9Ik0xMy40MjQ5IDE3LjQ0NjRMMTYuNDAyNCAyMC40MjM5TDIwLjE4MzMgMTYuNjQzTDE3LjM1MSAxMy44MTA3QzE3Ljg3MyAxMi4wMzYgMTcuNDM3MyAxMC4wMzQzIDE2LjAzOTMgOC42MzYzN0MxNi4wMjU3IDguNjIyNzYgMTYuMDA3NSA4LjYxMzY4IDE1Ljk5MzkgOC42MDAwNkMxNS45ODAzIDguNTg2NDQgMTUuOTcxMiA4LjU2ODI5IDE1Ljk1NzYgOC41NTQ2N0w3LjY2NTA1IDAuMjYyMTIxQzcuMzE1NTYgLTAuMDg3MzczNiA2Ljc1MjczIC0wLjA4NzM3MzYgNi40MDMyNCAwLjI2MjEyMUM2LjA1Mzc0IDAuNjExNjE1IDYuMDUzNzQgMS4xNzQ0NCA2LjQwMzI0IDEuNTIzOTNMMTQuMTA1NyA5LjIyMTg5QzE0LjEwNTcgOS4yMjE4OSAxNC4xMTAzIDkuMjI2NDMgMTQuMTE0OCA5LjIyNjQzQzE0LjMzMjcgOS40NDQyOSAxNC4zMzI3IDkuNzkzNzkgMTQuMTE0OCAxMC4wMTE3QzEzLjg5NjkgMTAuMjI5NSAxMy41NDc1IDEwLjIyOTUgMTMuMzI5NiAxMC4wMTE3TDEzLjMyNSAxMC4wMDcxTDUuNjE4MDEgMi4zMDQ2MkM1LjI2ODUyIDEuOTU1MTMgNC43MDU2OSAxLjk1NTEzIDQuMzU2MiAyLjMwNDYyQzQuMDA2NyAyLjY1NDEyIDQuMDA2NyAzLjIxNjk0IDQuMzU2MiAzLjU2NjQzTDEyLjA1ODcgMTEuMjczNUMxMi4wNTg3IDExLjI3MzUgMTIuMDYzMiAxMS4yNzM1IDEyLjA2MzIgMTEuMjc4QzEyLjI4MTEgMTEuNDk1OSAxMi4yODExIDExLjg0NTQgMTIuMDYzMiAxMi4wNjMyQzExLjg0NTQgMTIuMjgxMSAxMS40OTU5IDEyLjI4MTEgMTEuMjc4IDEyLjA2MzJDMTEuMjc4IDEyLjA2MzIgMTEuMjc4IDEyLjA1ODcgMTEuMjczNSAxMi4wNTg3TDMuNTcwOTcgNC4zNTE2NkMzLjIyMTQ4IDQuMDAyMTcgMi42NTg2NSA0LjAwMjE3IDIuMzA5MTYgNC4zNTE2NkMxLjk1OTY3IDQuNzAxMTUgMS45NTk2NyA1LjI2Mzk4IDIuMzA5MTYgNS42MTM0N0wxMC4wMTE3IDEzLjMxNkwxMC4wMTYyIDEzLjMyMDVDMTAuMjM0MSAxMy41Mzg0IDEwLjIzNDEgMTMuODg3OSAxMC4wMTYyIDE0LjEwNTdDOS43OTgzMyAxNC4zMjM2IDkuNDQ4ODMgMTQuMzIzNiA5LjIzMDk3IDE0LjEwNTdDOS4yMzA5NyAxNC4xMDU3IDkuMjMwOTcgMTQuMTAxMiA5LjIyNjQzIDE0LjEwMTJWMTQuMTA1N0wxLjUyMzkzIDYuMzk4N0MxLjE3ODk4IDYuMDQ5MiAwLjYxMTYxNSA2LjA0OTIgMC4yNjIxMjEgNi4zOTg3Qy0wLjA4NzM3MzYgNi43NDgxOSAtMC4wODczNzM2IDcuMzExMDIgMC4yNjIxMjEgNy42NjA1MUw4LjU1OTIxIDE1Ljk1NzZDOC41NzI4MyAxNS45NzEyIDguNTkwOTggMTUuOTgwMyA4LjYwNDYgMTUuOTkzOUM4LjYxODIyIDE2LjAwNzUgOC42MjcyOSAxNi4wMjU3IDguNjQwOTEgMTYuMDM5M0M5LjkzOTAzIDE3LjMzMjkgMTEuNzU0NiAxNy44MDA0IDEzLjQyNDkgMTcuNDQ2NFoiIGZpbGw9IiMwMDkzRDAiLz48cGF0aCBkPSJNNDAuMjA0NCAzNi42Njg2TDI5LjMyMDEgMjUuNzc5OEwyNS41MzkyIDI5LjU1NjFMMzYuNDI4IDQwLjQ0NDlDMzcuNDcyIDQxLjQ4ODkgMzkuMTY1IDQxLjQ4ODkgNDAuMjA4OSA0MC40NDQ5QzQxLjI0ODMgMzkuNDA1NSA0MS4yNDgzIDM3LjcwOCA0MC4yMDQ0IDM2LjY2ODZaIiBmaWxsPSIjMDA5M0QwIi8+PC9zdmc+Cg==") center no-repeat;
+        background-size: 62%;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .price-info {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.5em;
+        padding-top: 0.66em;
+        margin-top: auto;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .price-info.from:before {
+        content: 'от ';
+        font-weight: normal;
+        font-size: 66%;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .price-info:after {
+        font-weight: normal;
+        font-size: 66%;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .actions {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    #hotels-set .cards-grid .card-cell > .pad .info .actions .buttonlike {
+        font-size: 13px;
+        border-radius: 0;
+        text-transform: uppercase;
+    }
+    @media screen and (max-width: 576px) {
+        #hotels-set .cards-grid .card-cell > .pad .info .actions .buttonlike {
+            font-size: 12px;
+        }
+    }
+
+</style>
+<div id="hotels-set" data-component-instance="61dcd1b7-ae59-4ef0-86ea-810efdb40969">
+<div class="filters-wrap">
+<div class="group-filters">
+<div class="heading region">Выберите страну</div>
+<button class="buttonlike white selected" data-group="*">ВСЕ</button> <button class="buttonlike white " data-group="Турция">Турция</button> <button class="buttonlike white " data-group="ОАЭ">ОАЭ</button> <button class="buttonlike white " data-group="Египет">Египет</button> <button class="buttonlike white " data-group="Таиланд">Таиланд</button> <button class="buttonlike white " data-group="Индия">Индия</button> <button class="buttonlike white " data-group="Мальдивы">Мальдивы</button> <button class="buttonlike white " data-group="Шри-Ланка">Шри-Ланка</button> <button class="buttonlike white " data-group="Россия">Россия</button></div>
+</div>
+<div class="cards-grid">
+<div class="card-cell" data-group="Турция" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/1/27685/637528147018354881.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">OTIUM DELIGHT HOTEL &amp; SPA</h3>
+<h4 class="location">Анталья (Antalya)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">52 189</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/turkey/otium-delight-hotel-spa-antalya/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%223QsmiN1D9zaXVID7hc3WHUj85mGwpT4JQ%2bCOXBVCvz%2fEgNPhCTApXRAfNcuoUdjiPqIllkIHnDNOYpMtx2z4QAIOoyVfZv9X7GAjbeOX23ehYs8oJy7tO4DsfSDLiN%2fxhglLVpnYE%2fyLH%2fniD5l2U2i7lzkL%2bC1M9S4l54I6pYg%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Турция" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/1/8232/636471322245360110.jpg');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">JUSTINIANO DE LUXE RESORT</h3>
+<h4 class="location">Аланья (Alanya)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Все Включено</span> </span></div>
+<div class="price-info from rur per-person">29 599</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/turkey/justiniano-de-luxe-resort-alanya/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22%2bqv6r7hh%2fpjfaysxDvVWHrFDVjh4O333V8uBb8Aqcvzem%2bNSGCRDXj5p60SrLmTu8HExYLvAOT3SJRWKtXze0HdQ4rv4EkGCcXVl18WPiJA4UmsahXVbTL%2bTfWgM3CFDP8CC%2fI2OhPW3srFIiGAy0wazFKfqNhC1eBTylzkiY7M%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Турция" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/1/31155/637624840933034571.jpg');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">ALEXIA RESORT &amp; SPA HOTEL</h3>
+<h4 class="location">Сиде (Side)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Все Включено</span> </span></div>
+<div class="price-info from rur per-person">36 686</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/turkey/alexia-resort-spa-hotel-side/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%2209xEgK1G1cdIn0%2bgdHghNc3RULz%2bvFaCsAHzGPUT6ErpHB%2b8sPXRzVG9UooCE9Nt3u0vEOhAYgDZoLExU4CeU4JGTiVMnBix5PcAhMER7tcqGEPr7Lwd%2bERAa0Qxk21XXDanGRdP%2fKYUK42wCTlS52v0Wo4nU5xVn6cyVcGS2Bw%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Турция" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/1/8219/636442024225072255.jpg');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">GRAND PARK LARA</h3>
+<h4 class="location">Анталья (Antalya)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Все Включено</span> </span></div>
+<div class="price-info from rur per-person">38 648</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/turkey/grand-park-lara-antalya/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22nep2qWMf5TPkvCmtKaNUwLlIdwyOxd4ztDGqa9p2wplXpxWUK1lfwJ8cV2st%2fkcQ5W52lZapxR%2fHce6mTnn%2bWJTYgezkkb%2fbhr%2bU1blKXEnMmGQEh3aDaKKZP9WywGY1O1BlvCWnA%2b5d653dzF1WqA%3d%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="ОАЭ" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/31/16377/637333563250888343.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">FLAMINGO BEACH RESORT</h3>
+<h4 class="location">Умм-Аль-Кувейн (Umm Al Quwain)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">55 305</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/united-arab-emirates/flamingo-beach-resort-umm-al-quwain/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22o0GUmo8NrGqNMYeQjtmKSDz2K0w7KnAHv%2bkEtOoumqDJ%2bedXNkAyexmycXyxXmsPleU4nRxtR4%2bbRykxAASH2uPEyRwA%2bmVuXKY5YzAnbdv0WjuHe1BlDicMxP0XP1sY8jtEgm2Y56RR9oBbe0%2bVV8vIZKfySwRd5WjIy%2bg4cmA%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="ОАЭ" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/31/8230/636823041951882446.jpg');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">BAHI AJMAN PALACE HOTEL</h3>
+<h4 class="location">Аджман (Ajman)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">87 732</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/united-arab-emirates/bahi-ajman-palace-hotel-ajman/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22N75%2fQXlWz%2bgjtqlDAAjegRTjn2QzvVNXBLInCYwrb1A0J8Yb%2bn21uN698iea62g2elmed0rOntAMEHGmMCMR0yBJfSTMnYWhq16UW3Mfaz8De7jqN3YvJ5l%2feB%2fmOvoXz06PupWiyxaljxPn7%2bdS%2bmB94ccx41mHzv%2fMhk9Zsn4%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="ОАЭ" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/31/27882/637958294541263370.jpg');">
+<div is="hotel-stars" class="trait" data-category="4 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">MIRAGE BAB AL BAHR BEACH RESORT</h3>
+<h4 class="location">Фуджейра (Fujairah)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">71 600</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/united-arab-emirates/mirage-bab-al-bahr-beach-resort-fujairah/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22dmdIxlo9X7dckycq2sWff4nE8huD1Mz9D28XtnocBOI27fFCm%2bPwEpZDTap8csiylqFqPf4Pz%2fCQtkZ8phghqqUpvy3lN%2fCEX%2bfMiGj2fPc5Z5d2PWUWEhBIA6p4TnQSdyOBO%2bDN%2fGmq%2f5IoREk4Y54vgHJaLsTRTYaR04BT08uK07A9v4MtXfMn9mZ8iWeu%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="ОАЭ" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/31/9710/637322513889398852.jpg');">
+<div is="hotel-stars" class="trait" data-category="4 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">RAMADA BEACH HOTEL AJMAN</h3>
+<h4 class="location">Аджман (Ajman)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">21.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Полный Пансион</span> </span></div>
+<div class="price-info from rur per-person">92 490</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/united-arab-emirates/ramada-beach-hotel-ajman-ajman/?q=%7b%22Bgn%22%3a%2221.03.2023%22%2c%22End%22%3a%2221.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22uSOJHghwCaAfq4devLEvA6ZrHIq0O0InGTJQ8Mdl0voWWeG0zAutkmx%2f3ZDOiU2PRPmCar4dwvZxv0xm%2fJd6NdgheJh5J7%2fKvXM%2bI7Qu3hciULoJvLVU2oFWlU8O8lZf2cf75kt87mmcFY6CpxJ2A31V7MfTSEv%2f7%2bwgq2D94XE%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="ОАЭ" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/31/50797/637934970108353904.jpg');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">RIXOS MARINA ABU DHABI</h3>
+<h4 class="location">Абу-Даби (Abu Dhabi)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">21.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">111 439</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/united-arab-emirates/rixos-marina-abu-dhabi-abu-dhabi/?q=%7b%22Bgn%22%3a%2221.03.2023%22%2c%22End%22%3a%2221.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22mkrAXez8AtTadf94P08m7INndeffih7I1g9JR9qJXNaJCy%2fYYxqZ5ZdoZct9UdAY%2bgRJzhhP44aDbPjN84UHJE7t1zq5tOAcc84Ek9skDIR5bmQJp6s9O0%2bd81Sq%2f%2f89%2bNGIJnOJaWV8uBx1pktDyXWQwupjj38bwr4uSF6OvIM%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="ОАЭ" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/31/35759/637732964377623884.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">S19 HOTEL</h3>
+<h4 class="location">Дубай (Dubai)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Без питания</span> </span></div>
+<div class="price-info from rur per-person">61 160</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/united-arab-emirates/centara-mirage-beach-resort-dubai-dubai/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22nLd6KdaFH9Wc%2bel8BYut4DY%2bIFA5jo2APV6ftoutKgXF%2fx5c3j9UUeCyCDdMUvIr2ecTkIoSy6GgZNN75h9gO4v9N%2fcuX91Gk51jKBO%2ff63W02ft%2b1FN6EwuU8i4LTMYUm324jekS%2b11LS7VZ8iI9UKkrDV4ByMphM7%2f2fYsQsH9QHvT35qez3rKL5QbwcFB%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="ОАЭ" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/31/1044/636560228252155400.jpg');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">SHERATON JUMEIRAH BEACH RESORT</h3>
+<h4 class="location">Дубай (Dubai)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">21.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">139 050</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/united-arab-emirates/sheraton-jumeirah-beach-resort-dubai/?q=%7b%22Bgn%22%3a%2221.03.2023%22%2c%22End%22%3a%2221.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22S2wnvMxogCHcN0uQn0iyIha%2fMQ%2btMPx2jo7s%2bQJ8yNZd6Mq7aRQYYQyVbb%2f%2fCCImo0ojiUcOhBCz3hXjavZwrXUjWLLWdRyKH87Uvojv7vT00S0J8v7qrWUjHqrjpkbweqdc2m79pzveyoqMtoI32PjIAuXK7n%2fT1uorJJSRd4L0n%2fdR1xkxbIs3HL5xuVfd%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Египет" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/12/45/636475741097496499.jpg');">
+<div is="hotel-stars" class="trait" data-category="4 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">ALADDIN BEACH RESORT</h3>
+<h4 class="location">Хургада (Hurghada)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Все Включено</span> </span></div>
+<div class="price-info from rur per-person">63 292</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/egypt/aladdin-beach-resort-hurghada/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22UM8ICEwEJ2jLH%2bVdyqsU3QDfV68q2JDd%2fuHZZLP8qWwmW9DCVnAR3XtgdDobEfV4RGjSZsPyUQEXdwQeLe%2fvHZ3DU41XfWUJKu4WtM90kKejwCdNBdP093dqvoogEjYo7ISDv0Z%2bFyidc9V97up6pIrXsV9r%2f7ycymN4vK7PMCU%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Египет" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/12/10793/636973165716918528.jpg');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">CARIBBEAN WORLD RESORT SOMA BAY</h3>
+<h4 class="location">Хургада (Hurghada)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Все Включено</span> </span></div>
+<div class="price-info from rur per-person">68 725</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/egypt/caribbean-world-resort-soma-bay-hurghada/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22d7tsMi4cRop7%2bJgM57l9V7LnKmczlJ7LtRe2%2fKNexas8tku4Q6b477CRqwJmR0ysMAYAywCQOBPvjlX1sNvQZmExD2wT%2bqg2kbYcgQpGPsiWss57LdS4CLLJoSw6lyhQw%2btksieoya3S9xpX34iGaX8O10%2bZFIWD1UEd1JKjbgN4D8cuS8vA9Y4TbhAQTfRp%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Египет" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/12/133/636479072115698362.jpg');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">REHANA ROYAL BEACH RESORT AQUA PARK &amp; SPA</h3>
+<h4 class="location">Шарм-эш-Шейх (Sharm El Sheikh)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">22.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Все Включено</span> </span></div>
+<div class="price-info from rur per-person">69 329</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/egypt/rehana-royal-beach-resort-aqua-park-spa-sharm-el-sheikh/?q=%7b%22Bgn%22%3a%2222.03.2023%22%2c%22End%22%3a%2222.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22qimFZJoSvYmlCHkYXoZNGaGE29%2fKMugJDtiRlgncQjv6iYiMvtRuc1Wg1ciZ5%2bvp3TQaiKh5ZXZWdUZKmSqU5gk9UMYx6%2fLhVQ1mt2ZMAidNsvtkhD3LIeMN9D4SmyTJkp13Jm5xAoe0nalpOhKBOoG9xJu0xau6oLOvSWxNFGzD%2bOioObTdJOuLkbAoT0V1%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Египет" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/12/11021/637555682181376009.jpg');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">JASMINE PALACE RESORT</h3>
+<h4 class="location">Хургада (Hurghada)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Все Включено</span> </span></div>
+<div class="price-info from rur per-person">68 122</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/egypt/jasmine-palace-resort-hurghada/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22ErCwlC8leheUeXLF0c4Hlk5x%2bXxp0yhok%2bPZsF5T6ZKCv4kXczGcu7KYwX8x5cXCuWhZ5XEkSJRcOEnCjY1xgc7v85of4JpP5R3zAt8tFEE4ZlOOkfxI2S5cVbduYVhE0L6TR7AeK7cVUiCGCyTQ8Y0Zwsg43fJij%2fwvyPQPuzY%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Египет" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/12/4864/637117664740681246.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">ZAHABIA HOTEL &amp; BEACH RESORT</h3>
+<h4 class="location">Хургада (Hurghada)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Все Включено</span> </span></div>
+<div class="price-info from rur per-person">56 047</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/egypt/zahabia-hotel-beach-resort-hurghada/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22sl1BGfGJwn0s77L78BoshkCtn4jxo6BCS4NZkI%2bD0cwgilo8ub0POl3TPNqZmPTaQYnhyhhBqZ6GwadB%2f%2fl%2bxx%2f9yCrBGcZDZBFHdvnd7OAoZU0JnK2JHE%2fJEI%2bijumBxYntc39Qj6565prnWzFTYGbo1jJ2t%2bHUVwvNYh%2fbGQc%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Египет" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/12/94/636913063605243838.jpg');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">PYRAMISA BEACH RESORT SAHL HASHEESH</h3>
+<h4 class="location">Хургада (Hurghada)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Все Включено</span> </span></div>
+<div class="price-info from rur per-person">71 140</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/egypt/pyramisa-beach-resort-sahl-hasheesh-hurghada/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22zCfGWGV%2bOFuayT8eeGFj47r9sSCQ4fOiRxb%2feAFmsqwRQbJcGuv0j1JVvIw9ofvE0lWwnIQ9xjT1giZKdz7Px%2fAG2GrMMUKFjsvRFgZnFeLXt717UDFqVsIjACLfjA8PtiVA9hwuvXc4dfONlJrhfZqXGokxJRL4hpkjgCuK7EIxRz2b%2fQgcFgzdVvfBdrwR%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Египет" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/12/181/636760672130664569.jpg');">
+<div is="hotel-stars" class="trait" data-category="4 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">SEAGULL BEACH RESORT &amp; CLUB</h3>
+<h4 class="location">Хургада (Hurghada)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Все Включено</span> </span></div>
+<div class="price-info from rur per-person">63 292</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/egypt/seagull-beach-resort-club-hurghada/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22YHzUNB0uhVf%2bDe9LtKj%2ft%2fUIsmPq7u3NuwTrXQM1mjfx%2fMbEPkgkXRGqyvoD1QogFeqUQQ5t3lfzatoVVdyjNj8qfSCBwJYk0MvSi1%2bXAWiUQz2PLUCNA0ubFKJhZDWIH6K6Jw%2fg4EONJgDRxuXLlQZvTKKgqqjbw%2f%2b2nIpLYjI%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Египет" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/12/91/636811816267843889.jpg');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">OLD PALACE RESORT</h3>
+<h4 class="location">Хургада (Hurghada)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Ультра Все Включено</span> </span></div>
+<div class="price-info from rur per-person">74 763</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/egypt/old-palace-resort-hurghada/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22F1I96jGfAcUxdASkzokDLx3pIdxmVhAHTbPlRZ4PgYnZd7jTZ2i3cvnrEJr0eV%2f5tLUWg0r6HNlmzKDReUOw1AFLr4nNC%2buRTs%2bJqko5rZu4pMhmnYZqPHUnqe7ZlZeGbbUGr86oUHMoeS%2bfNFtSaWdajDFEOSdPq0hdnEfHOVo%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Таиланд" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/33/12413/637031949293557338.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">ADD PLUS HOTEL &amp; SPA</h3>
+<h4 class="location">о. Пхукет (Phuket)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Без питания</span> </span></div>
+<div class="price-info from rur per-person">75 101</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/thailand/add-plus-hotel-spa-phuket/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22JjVMwV21X6G9cyykfE5rrnH1u8azzZm0TX%2f0S2FuDk5yZRo31h6JVADgFt8Fv5leuqYFGKVQ4AqN%2bH%2fivLT1T%2fyuhBIW4goGztZtm%2bqukJ4Gf0sJHWFA9X8wziEw%2b%2f876MYyG6mf9YI2N7hak8%2b%2frKKlrq5rubnk%2biSuAOoR4x8%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Таиланд" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/33/6417/636516392051899387.jpg');">
+<div is="hotel-stars" class="trait" data-category="4 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">THE ASHLEE PLAZA PATONG HOTEL &amp; SPA</h3>
+<h4 class="location">о. Пхукет (Phuket)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Без питания</span> </span></div>
+<div class="price-info from rur per-person">73 729</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/thailand/the-ashlee-plaza-patong-hotel-spa-phuket/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22Y5mNuhFDbwj29FMB4JFSaXJMmeM9jTt8Q2fKyGd2lbMsTpvCSbAXAHVr1UxOJF%2bHJ54UuwXCxZo4mSHpO4xfiGGSnywgsdc2XrGiyiHEoUzZ7QGDXNdcSTHktAPgue%2f8frCjzy%2fiiqQIfn77%2fLZcV1HZoSRJNH3Xa8XQEm4CXt6NWgLWqVzA1Go2hiUxz4fs%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Таиланд" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/33/4854/637376015083589022.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">THE JOMTIEN TWELVE</h3>
+<h4 class="location">Паттайя (Pattaya)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">21.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">182 038</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/thailand/the-jomtien-twelve-pattaya/?q=%7b%22Bgn%22%3a%2221.03.2023%22%2c%22End%22%3a%2221.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22uoXC61S1HikiOq9%2fyTx9A0mqePehGB0v9DCG%2bqHjIpycGMkl45IYwJRXycrX0NQ%2b4vwNqI8lYV7z0gpeOdCHsI3O0%2bL1g7hWweFtEGs160tkHMkxtu1JYifqfS99hXluCX6UVdj7PDIWuS%2bbrHPro68SoHvNqkSwgs%2fP%2fNumXf8%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Таиланд" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/33/1090/636538405152961136.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">PATTAYA PARK BEACH RESORT</h3>
+<h4 class="location">Паттайя (Pattaya)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">21.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">180 078</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/thailand/pattaya-park-beach-resort-pattaya/?q=%7b%22Bgn%22%3a%2221.03.2023%22%2c%22End%22%3a%2221.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22RCbckP%2f9C6w9HCQOaiZUebb6%2fFcAX8Spxlt7ergDShr1hqO0pclzuExmgs78qYo6OSYNxm8rexKxoKDRA%2b5AlIIbUiyj8ysw09dVxKu5BdBJF%2blL0TvQ%2bQFmDlAkN%2fRzUFpKpJZl9zOIoD5nPRLH0phAlRM%2b0SQPWXcgYG%2fBPjk%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Таиланд" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/33/10327/636625061132742282.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">KATA SILVER SAND HOTEL</h3>
+<h4 class="location">о. Пхукет (Phuket)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">79 673</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/thailand/kata-silver-sand-hotel-phuket/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22U%2f657K0RQxudH95%2bE91Eu100sgr1%2bJcen9MUO2U6Jl5mum8gE5N72YtXJqK%2bce8rHU8%2fr3S3YXlZCnkmvo5nGDOuf7ayBc9FFl6Gux3rJjo6hyAwCECS94laW3NrU6cnFWtRoeGUuAdSXTmCs1I5HhLykIaqwQNQqsE8witKj5c%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Таиланд" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/33/19503/636709602789539532.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">MIRAGE PATONG</h3>
+<h4 class="location">о. Пхукет (Phuket)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Без питания</span> </span></div>
+<div class="price-info from rur per-person">76 015</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/thailand/mirage-patong-phuket/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%224MAlN4eOyEPi67vLPbruBU%2bYk0OLIDYlkaWmQaTUPymjC91zVEFy6XXHR8NK1542UgBNUNpKrMpfYt693bojHTziLL2cMssKKsUmKFaze%2bCNw5pEUtteDW%2f74c72pQRB5eVXFrcKnW5jl%2bfy19n5tULnFcmFFO797t8KRNZeAvE%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Таиланд" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/33/26464/636736411121008665.jpeg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">A2SEA JOMTIEN PATTAYA</h3>
+<h4 class="location">Паттайя (Pattaya)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">21.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">177 524</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/thailand/a2sea-jomtien-pattaya-pattaya/?q=%7b%22Bgn%22%3a%2221.03.2023%22%2c%22End%22%3a%2221.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22JWm%2fWXhl0lnDWqIsK%2f7XDwiV6IqDieyi8G%2beGoT64fCIboufhln0zeRHJ30Rg0hOjI4oh6ItNbK%2f7BY9DnoC46gT4HxN1jnZXQxVbW2wy0U4J1SwvtJFIgaxpElh47Jb5HXofe1jWZGBpV0qDVqJ%2bWkjSi2N1mykZVbl3HBJkmQ%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Таиланд" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/33/34479/637479362903301037.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">COSI KRABI AO NANG</h3>
+<h4 class="location">Краби (Krabi)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Без питания</span> </span></div>
+<div class="price-info from rur per-person">80 574</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/thailand/cosi-krabi-ao-nang-krabi/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22eRYkKBWjA3tTzKhj1r7sPEKXOrWL9tD6TMab6OQhqiBA79WCH7wms8I1gj9GYQLf9jbi2M6pBsw4%2f7rYOEoQdQwB%2bA9cfcuSEeEQX0XLszTtNXFbqRuAdUNXLT0vo0gcROMLtOLQUFN51DiP%2fhULh5MCw5OVTGQJKINUEWRgEow%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Индия" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/52/1240/637242006429621086.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">SEA BREEZE RESORT</h3>
+<h4 class="location">Северный Гоа (North Goa)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">19.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">89 303</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/india/sea-breeze-resort-north-goa/?q=%7b%22Bgn%22%3a%2219.03.2023%22%2c%22End%22%3a%2219.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22qpReEpHvgyu8Cl9a0d2Jef8tNcB2pSz4Hgk4XdETEf0rA3ki6AyneFW8H32kS91vDFg5vnen9g1st0zfZD72A1mOi4QqujXgzPnuTl%2bVZh9BaWp%2frQxoqdx19z3OYQELKvQ05n4xp91UdcKu%2f0QzCOG7DRMXkK0kxnHoD9STIYU%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Индия" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/52/51360/638073045714240086.jpg');">
+<div is="hotel-stars" class="trait" data-category="2 *"><span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">ARAMBOL PARADISE VILLAGE</h3>
+<h4 class="location">Северный Гоа (North Goa)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">19.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">84 093</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/india/arambol-paradise-village-north-goa/?q=%7b%22Bgn%22%3a%2219.03.2023%22%2c%22End%22%3a%2219.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22MsVAzTBH4UlmdC5W132431YnDQqYaYEGvBhKppVJBbo1AKtyzJfCHBGDZEXoW9StF37oWox1yVc9c9DOk%2bOxMd7KWPH7PBNhPl5gdHJEIdD0livR0VcsGkmzG5UXfeTtZ%2bVCvttCjCgshhj%2fh4AwitXVsyTv26vsXvcunF75%2fL8%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Индия" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/52/23691/636631979471105769.JPG');">
+<div is="hotel-stars" class="trait" data-category="2 *"><span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">AURITA HOLIDAY HOMES</h3>
+<h4 class="location">Северный Гоа (North Goa)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">19.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">88 023</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/india/aurita-holiday-homes-north-goa/?q=%7b%22Bgn%22%3a%2219.03.2023%22%2c%22End%22%3a%2219.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22hLEsztT34kKkpCAInWSKv3r922VhgLZ7Pi7MThjw23Ri7UFAdR0jh0Xv5EJeDisP3eJrw4w0Jcx0y3jnhyXL3hQuEb23wnyKJ2m6lirnKCrURqBIJzYFP1h%2fRp0ZrvFOaa8PDY4nswHKmKsBl5GsIAXaps7rxMao0tra2QQxAtM%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Индия" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/52/3671/636693475610862151.JPG');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">LOTUS RESORT</h3>
+<h4 class="location">Южный Гоа (South Goa)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">19.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">95 890</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/india/lotus-resort-south-goa/?q=%7b%22Bgn%22%3a%2219.03.2023%22%2c%22End%22%3a%2219.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22gbsAyxCBvk9q12jL6bK95xZvKycIPdhiD%2b3KraStjDLNq%2fq3OyLiplnnl%2fidZ0dm9dEDkygOJZe0JShSuBDQUt5SxO0aRSuv5uXGmFreDnUDFFd4uiKcyU18iVS%2btiylKdYlPBJcrBo0%2fb9JHzWepA%3d%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Индия" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/52/3705/636704656018831516.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">SANTIAGO RESORT</h3>
+<h4 class="location">Северный Гоа (North Goa)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">19.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">89 588</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/india/santiago-resort-north-goa/?q=%7b%22Bgn%22%3a%2219.03.2023%22%2c%22End%22%3a%2219.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%222AMzuH%2b0jAGxK3zZ8k6FOmX%2bAYSp5AxMaLqCNRITxcL%2fJPsiSm7UtMZmGRvfDmUQ8RWJrXdjPM34EZQWqO1aXopRh6vuPoirq4DTZdTtBuUB0fpVihP%2fGeN%2bEP1hcSMFBgWrS717jmUaCIFoIXW%2fiIsRpwf0SUf3VqLh2kg6%2beI%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Индия" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/52/3644/636319994256883088.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">COLVA KINARA</h3>
+<h4 class="location">Южный Гоа (South Goa)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">19.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">93 977</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/india/colva-kinara-south-goa/?q=%7b%22Bgn%22%3a%2219.03.2023%22%2c%22End%22%3a%2219.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22OdQiY0lIWqQ2Z%2f0WERPScsRWEGI27eT8jNEhoKuz4RkRrSt8SH37RAYFiUv4OF8mdysFRTSccYTS2YAzmP4HG9WSnQfxXbTilUOqr20PFWifSUQr5gxB08RN6HNmF94qIXDAVENtD%2bvwnpAfo1YL4g%3d%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Индия" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/52/29780/637082935502313463.jpg');">
+<div is="hotel-stars" class="trait" data-category="3 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">ZAPPIA COVE RESORT</h3>
+<h4 class="location">Южный Гоа (South Goa)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">19.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Без питания</span> </span></div>
+<div class="price-info from rur per-person">85 594</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/india/zappia-cove-resort-south-goa/?q=%7b%22Bgn%22%3a%2219.03.2023%22%2c%22End%22%3a%2219.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22kYozSoSwMxRg4usymkSdZLmq7nciE%2fObsVcjhepfjdk0BSNHqGATGA8Z6K1KuoFDVYE3SQvhL31nBjz6w%2b1m7kNzL19muGPR1zLrJmoVw4YY1BxTl2IwFM5iTnFSCwM%2boQE5cpjAprxiLpgMFo7%2b0ftEGaUcPuRoos4SiiYnbiA%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Индия" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/52/9866/636675084585335375.jpg');">
+<div is="hotel-stars" class="trait" data-category="2 *"><span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">MOBOR BEACH RESORT</h3>
+<h4 class="location">Южный Гоа (South Goa)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">19.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">88 152</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/india/mobor-beach-resort-south-goa/?q=%7b%22Bgn%22%3a%2219.03.2023%22%2c%22End%22%3a%2219.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%2255qNE9mIZ9PgjGNAtp83f7F8rP%2bmbUizwYGrLvCFhNlyYk7bC6k1lm7qZTDZXrx%2bhDQ0%2fTZadqwgES8lZTcgWO2xeKPODVYcZmKIguFTLJY8x5V8SCJSqrNX1VQPUreRWjyrZ0E3SFdyY9mAfA57x5Z8%2bGlX5j80yeaObA%2bu2bQ%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Мальдивы" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/35/1225/637032016558004218.jpg');">
+<div is="hotel-stars" class="trait" data-category="4 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">BANDOS MALDIVES</h3>
+<h4 class="location">Северный Мале Атолл (North Male Atoll)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">22.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">168 837</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/maldives/bandos-maldives-north-male-atoll/?q=%7b%22Bgn%22%3a%2222.03.2023%22%2c%22End%22%3a%2222.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22K2omgxnWZt%2bIbnQThskT8ZP8EGjwIGV4MbQmqlXx0x74Zl8Q8BXT64l%2bNa5fo2eblLmWzBsnF9c8W6%2beDpli5TlHVdda7g2PUdDBMqmEwpreJLm5m5lhb0dBRmMXAxRsk%2f0CzERVu5eLtuGgWFSHOg%3d%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Мальдивы" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/35/4483/637315500937791998.JPG');">
+<div is="hotel-stars" class="trait" data-category="4 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">FIHALHOHI ISLAND RESORT</h3>
+<h4 class="location">Южный Мале Атолл (South Male Atoll)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">22.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Полный Пансион</span> </span></div>
+<div class="price-info from rur per-person">164 388</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/maldives/fihalhohi-island-resort-south-male-atoll/?q=%7b%22Bgn%22%3a%2222.03.2023%22%2c%22End%22%3a%2222.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22CDjgd1NrF8KeNQd5gLKxxwyg%2fvdg0Nl3V1J%2fmcinI2zvnUPeG3n2BXhcZLnl%2bk%2bY1jSv9vqic7c5lmkPglLI%2fC8sJAq9BYUxnWYkfaiTBHnthZrfNcfifsNPAUg5ALvG8Lvkv4EtLwNw4ITDsCCCyA6AoYrwUuIi5JmMUDjyDwI%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Мальдивы" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/35/36487/637645394342688863.jpg');">
+<div is="hotel-stars" class="trait" data-category="4 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">SOUTH PALM RESORT MALDIVES</h3>
+<h4 class="location">Адду Атолл (Addu Atoll)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">22.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Полный Пансион</span> </span></div>
+<div class="price-info from rur per-person">169 131</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/maldives/south-palm-resort-maldives-addu-atoll/?q=%7b%22Bgn%22%3a%2222.03.2023%22%2c%22End%22%3a%2222.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22EFf1xxqVR55aBz7VOxmbJbR0QSx4jtshX%2balv0kkbszMIzAOhGRjP%2fKZ3DBTxme7Q69fiRXFICnsGDXqWSzvKPaC0FnaRODWmzoePi77ZHXMCy%2bWk3oAkQ4d6HC%2fKZZIP0sH1v8sKfqnfT84RnyP9NcX0PHC%2fjyeHFaH0AblMYU%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Шри-Ланка" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/40/11507/637649752418239240.jpg');">
+<div is="hotel-stars" class="trait" data-category="4 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">CENTARA CEYSANDS RESORT &amp; SPA</h3>
+<h4 class="location">Бентота (Bentota)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">103 296</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/sri-lanka/centara-ceysands-resort-spa-bentota/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22a5BejYqwSlkd5xJYuO8vtJdWFwH056W2OYKwEq6NNzQmNJvp3yvwMy34g6aWRzIrF6eWO9nWOSCU9gBJRkW08bMpkNDHeiRvUhlWXed%2fznJAs8s2TGBXRPIZOSmqATswjH31l9UF8Fp7wGgyWa1f9SC4oanhkbDJK40fmT%2bxyhk%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Шри-Ланка" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/40/2607/636627682541537389.png');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">HERITANCE AHUNGALLA</h3>
+<h4 class="location">Ахунгала (Ahungalla)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">100 567</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/sri-lanka/heritance-ahungalla-ahungalla/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22fuUkI3087TTQqIFgcmOwKx1S00q%2fgpTOlKMcDRt8FB%2fv1WCFOI2IEHxZktdI4yr6UFwpktfLyFG2ex3GUx%2b0z09IKbRE2Ezt58tbnaR22Vfo5lqQf21V0LZ3jldUAmB62usYXBxUfZvUVnaj0EgWcOHnALgSrJXrH5Xyx8o8U38%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Шри-Ланка" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/40/2630/636631009612452414.png');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">TAJ BENTOTA RESORT &amp; SPA</h3>
+<h4 class="location">Бентота (Bentota)</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">16.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">116 378</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/sri-lanka/taj-bentota-resort-spa-bentota/?q=%7b%22Bgn%22%3a%2216.03.2023%22%2c%22End%22%3a%2216.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%222O6URTliJVAEnzBXts4heHkxzxgSdR88juKfg%2fC%2fx3Srb5iVSmeB%2fANcrzZnP0u3PT6Z2sdRZ66I0aRo3tFpCco%2bihmfkpZh7wIXH5ElehDy4iTUqGuXZxRrkZmHsrYvJHu5DfO1VE72x8qHEh2Z9DrKt5rdBcAOu0S9Ily3JfU%3d%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Россия" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/3/11417/637536604583639123.jpg');">
+<div is="hotel-stars" class="trait" data-category="5 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">SWISSOTEL RESORT SOCHI KAMELIA</h3>
+<h4 class="location">Сочи</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">17.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Без питания</span> </span></div>
+<div class="price-info from rur per-person">52 895</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/russia/swissotel-sochi-sochi/?q=%7b%22Bgn%22%3a%2217.03.2023%22%2c%22End%22%3a%2217.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22axTm0GCCS7qmu3VgwW0QUbK0%2f5uD2mnMyycdLgKcB%2bAzuqnVn1seBKVmER4Z5Yl1o7NcHOKv16%2bKromYTDPffSH72TNbhjuFPjHWMMhPtlxhGdDMw5rptTPiKWsiefhvmV5gmOVc5yYPQ5RQRYsNfGVlMqyVZEnojZaycVnlpNQpvaec9dwuD%2fg94PViKhUaxsowY7L0YX%2byzkRSuhWsxdH1foLJsw0MkVg58OGMCNjaXzMfD8DmwYTRj0WaC2bm%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Россия" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/3/20081/636950003549041856.jpg');">
+<div is="hotel-stars" class="trait" data-category="4 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">РОЗА СПРИНГС САНАТОРИЙ</h3>
+<h4 class="location">Сочи</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">21.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Завтрак</span> </span></div>
+<div class="price-info from rur per-person">92 933</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/russia/sanatorium-roza-springs-sochi/?q=%7b%22Bgn%22%3a%2221.03.2023%22%2c%22End%22%3a%2221.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22k86QSUEWHm7zC9njFGhpZGSHPrdYqOQoxd4SLfa98Sti1Ozx0U%2bZsgdbXQr%2bua1oT4H0YkkyOUdKDm5%2bjVYPlFwCtL7qyhMt1Bffvo3gA7KVaMn0UfAmNumg5bHCwPi4gx63csdQtg6QBnXFaciBAB8Ui4Xpe729wDxanjZhCT5ANLuHXL3eOT%2fnV7ddgVQ7%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Россия" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/3/11452/636959551803061844.jpg');">
+<div is="hotel-stars" class="trait" data-category="4 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">COURTYARD МАРРИОТТ СОЧИ КРАСНАЯ ПОЛЯНА</h3>
+<h4 class="location">Сочи</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">21.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Без питания</span> </span></div>
+<div class="price-info from rur per-person">53 194</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/russia/courtyard-marriott-sochi-krasnaya-polyana-sochi/?q=%7b%22Bgn%22%3a%2221.03.2023%22%2c%22End%22%3a%2221.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22wDByZHQHSys2FJaqhi58ivERcVPePnZJXc1ifJailS6wdS%2fBfRbjbkpC3YLI15fIrgea%2fScM82g6X6QpRJ4%2b%2fi3GgKBCmhJioXhNfKAy7yNaLpuukOjfxQUg6agQz7HmHu97LWLZjQAEdgjpBSlijR7pvdU8sVLbEGDDIpeoQrFkuPupaULImvQ8ypXpXrY%2biWNT%2fccs5wrPs1wP0RiPkH3TH225pWgRtp5I2zWVDHFFuufPh%2fLbeG62qeRQMe6o%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+<div class="card-cell" data-group="Россия" data-year-month="2023-03">
+<div class="pad">
+<div class="visual" style="background-image: url('https://content.coral.ru/resize/800x600/media/image/3/34475/637475550005049950.jpg');">
+<div is="hotel-stars" class="trait" data-category="4 *"><span class="star"> </span> <span class="star"> </span> <span class="star"> </span> <span class="star"> </span></div>
+</div>
+<div class="info">
+<h3 class="name">АПАРТ-ОТЕЛЬ СНЕГА</h3>
+<h4 class="location">Сочи</h4>
+<div class="terms"><span class="term-badge depart-from"> <span class="icon"></span><span class="label">Москва</span> </span> <span class="term-badge depart-date"> <span class="icon"></span><span class="label">17.03.23</span> </span> <span class="term-badge accomodation"> <span class="icon">7</span><span class="label">ночей</span> </span> <span class="term-badge meal"> <span class="icon"></span><span class="label">Без питания</span> </span></div>
+<div class="price-info from rur per-person">32 584</div>
+<div class="actions"><a href="https://www.coral.ru/hotels/russia/apart-hotel-snega-sochi/?q=%7b%22Bgn%22%3a%2217.03.2023%22%2c%22End%22%3a%2217.03.2023%22%2c%22Dr%22%3a%220%22%2c%22Acc%22%3a%227%22%2c%22Gest%22%3a%222%22%2c%22Q%22%3a%22uX599EOC%2bci4xNXrL9dXwjyOcd0uMX5efoJi8vpbdFlkjL%2bIZhftKjre85D4f2P1jnsl4zq15ml3ULk8tHIekxMJuif3Tlmun%2f9rehR1sObW4Xp83sQ3hYN3eeka3pWwUD0widy6ct%2fmAmYabYm%2fIm8zzFDLt%2bczocNCliQNAc0XUXtgbF%2f5vs5dJN9lI6MI%22%2c%22Ts%22%3a0%2c%22Las%22%3afalse%2c%22AcId%22%3a0%2c%22FDate%22%3a%220001-01-01T00%3a00%3a00Z%22%2c%22Ref%22%3afalse%2c%22Pstatus%22%3afalse%2c%22TransferPrice%22%3a0.0%2c%22Chr%22%3atrue%2c%22Rglr%22%3afalse%2c%22Srt%22%3a1%7d" class="buttonlike yellow" target="_blank" rel="noopener">Забронировать</a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    window.ASAP || (window.ASAP = (function() {
+        var callall, fns;
+        fns = [];
+        callall = function() {
+            var f, results;
+            results = [];
+            while (f = fns.shift()) {
+                results.push(f());
+            }
+            return results;
+        };
+        if (document.addEventListener) {
+            document.addEventListener('DOMContentLoaded', callall, false);
+            window.addEventListener('load', callall, false);
+        } else if (document.attachEvent) {
+            document.attachEvent('onreadystatechange', callall);
+            window.attachEvent('onload', callall);
+        }
+        return function(fn) {
+            fns.push(fn);
+            if (document.readyState === 'complete') {
+                return callall();
+            }
+        };
+    })());
+
+    window.log || (window.log = function() {
+        if (window.console && window.DEBUG) {
+            if (typeof console.group === "function") {
+                console.group(window.DEBUG);
+            }
+            if (arguments.length === 1 && Array.isArray(arguments[0]) && console.table) {
+                console.table.apply(window, arguments);
+            } else {
+                console.log.apply(window, arguments);
+            }
+            return typeof console.groupEnd === "function" ? console.groupEnd() : void 0;
+        }
+    });
+
+    window.trouble || (window.trouble = function() {
+        var ref;
+        if (window.console) {
+            if (window.DEBUG) {
+                if (typeof console.group === "function") {
+                    console.group(window.DEBUG);
+                }
+            }
+            if ((ref = console.warn) != null) {
+                ref.apply(window, arguments);
+            }
+            if (window.DEBUG) {
+                return typeof console.groupEnd === "function" ? console.groupEnd() : void 0;
+            }
+        }
+    });
+
+    window.preload || (window.preload = function(what, fn) {
+        var lib;
+        if (!Array.isArray(what)) {
+            what = [what];
+        }
+        return $.when.apply($, (function() {
+            var j, len, results;
+            results = [];
+            for (j = 0, len = what.length; j < len; j++) {
+                lib = what[j];
+                results.push($.ajax(lib, {
+                    dataType: 'script',
+                    cache: true
+                }));
+            }
+            return results;
+        })()).done(function() {
+            return typeof fn === "function" ? fn() : void 0;
+        });
+    });
+
+    window.queryParam || (window.queryParam = function(p, nocase) {
+        var k, params, params_kv;
+        params_kv = location.search.substr(1).split('&');
+        params = {};
+        params_kv.forEach(function(kv) {
+            var k_v;
+            k_v = kv.split('=');
+            return params[k_v[0]] = k_v[1] || '';
+        });
+        if (p) {
+            if (nocase) {
+                for (k in params) {
+                    if (k.toUpperCase() === p.toUpperCase()) {
+                        return decodeURIComponent(params[k]);
+                    }
+                }
+                return void 0;
+            } else {
+                return decodeURIComponent(params[p]);
+            }
+        }
+        return params;
+    });
+
+    ASAP(function() {
+        var $ctx, libs, selector_attrs, selector_attrs_string, selector_from_predicate, selector_predicate;
+        libs = ['https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js'];
+        $ctx = $('#hotels-set');
+        $ctx = $('[data-component-instance="61dcd1b7-ae59-4ef0-86ea-810efdb40969"]');
+        selector_attrs = ['data-group', 'data-year-month'];
+        selector_attrs_string = (selector_attrs.map(function(attr) {
+            return ".filters-wrap [" + attr + "]";
+        })).join(',');
+        selector_predicate = function() {
+            var predicate;
+            predicate = {};
+            $('.filters-wrap *.selected', $ctx).each(function(idx, button) {
+                return selector_attrs.forEach(function(attr_name) {
+                    var attr_value;
+                    attr_value = $(button).attr(attr_name);
+                    if (attr_value) {
+                        return predicate[attr_name] = attr_value;
+                    }
+                });
+            });
+            return predicate;
+        };
+        selector_from_predicate = function(predicate) {
+            var k, selector, v;
+            selector = '';
+            for (k in predicate) {
+                v = predicate[k];
+                selector += (v === '*' ? '*' : "[" + k + "='" + v + "']");
+            }
+            return selector || '*';
+        };
+        preload(libs, function() {
+            var $grid, initial_selector;
+            initial_selector = selector_from_predicate(selector_predicate());
+            $grid = $('.cards-grid', $ctx).on('layoutComplete', function(e, items) {
+                var by_top, els, max_height, results, row, t, tallest_item;
+                els = items.map(function(i) {
+                    return i.element;
+                });
+                by_top = _.groupBy(els, function(el) {
+                    return $(el).css('top');
+                });
+                results = [];
+                for (t in by_top) {
+                    row = by_top[t];
+                    tallest_item = _.maxBy(row, function(el) {
+                        return $(el).outerHeight();
+                    });
+                    max_height = $(tallest_item).outerHeight();
+                    results.push($(row).css({
+                        minHeight: max_height
+                    }));
+                }
+                return results;
+            }).isotope({
+                itemSelector: '.card-cell',
+                layoutMode: 'fitRows',
+                stagger: 30,
+                filter: initial_selector
+            });
+            $(selector_attrs_string, $ctx).on('click', function() {
+                var $this;
+                $this = $(this);
+                $grid.find('.card-cell').css({
+                    minHeight: 0
+                });
+                $this.addClass('selected').siblings('.selected').removeClass('selected');
+                return $grid.isotope({
+                    filter: selector_from_predicate(selector_predicate())
+                });
+            });
+            return setTimeout(function() {
+                return $ctx.addClass('shown');
+            }, 0);
+        });
+        return true;
+    });
+
+</script>
+<script type="text/backup">
+    window.ASAP || (window.ASAP = (function() {
+        var callall, fns;
+        fns = [];
+        callall = function() {
+            var f, results;
+            results = [];
+            while (f = fns.shift()) {
+                results.push(f());
+            }
+            return results;
+        };
+        if (document.addEventListener) {
+            document.addEventListener('DOMContentLoaded', callall, false);
+            window.addEventListener('load', callall, false);
+        } else if (document.attachEvent) {
+            document.attachEvent('onreadystatechange', callall);
+            window.attachEvent('onload', callall);
+        }
+        return function(fn) {
+            fns.push(fn);
+            if (document.readyState === 'complete') {
+                return callall();
+            }
+        };
+    })());
+
+    window.log || (window.log = function() {
+        if (window.console && window.DEBUG) {
+            if (typeof console.group === "function") {
+                console.group(window.DEBUG);
+            }
+            if (arguments.length === 1 && Array.isArray(arguments[0]) && console.table) {
+                console.table.apply(window, arguments);
+            } else {
+                console.log.apply(window, arguments);
+            }
+            return typeof console.groupEnd === "function" ? console.groupEnd() : void 0;
+        }
+    });
+
+    window.trouble || (window.trouble = function() {
+        var ref;
+        if (window.console) {
+            if (window.DEBUG) {
+                if (typeof console.group === "function") {
+                    console.group(window.DEBUG);
+                }
+            }
+            if ((ref = console.warn) != null) {
+                ref.apply(window, arguments);
+            }
+            if (window.DEBUG) {
+                return typeof console.groupEnd === "function" ? console.groupEnd() : void 0;
+            }
+        }
+    });
+
+    window.preload || (window.preload = function(what, fn) {
+        var lib;
+        if (!Array.isArray(what)) {
+            what = [what];
+        }
+        return $.when.apply($, (function() {
+            var j, len, results;
+            results = [];
+            for (j = 0, len = what.length; j < len; j++) {
+                lib = what[j];
+                results.push($.ajax(lib, {
+                    dataType: 'script',
+                    cache: true
+                }));
+            }
+            return results;
+        })()).done(function() {
+            return typeof fn === "function" ? fn() : void 0;
+        });
+    });
+
+    window.queryParam || (window.queryParam = function(p, nocase) {
+        var k, params, params_kv;
+        params_kv = location.search.substr(1).split('&');
+        params = {};
+        params_kv.forEach(function(kv) {
+            var k_v;
+            k_v = kv.split('=');
+            return params[k_v[0]] = k_v[1] || '';
+        });
+        if (p) {
+            if (nocase) {
+                for (k in params) {
+                    if (k.toUpperCase() === p.toUpperCase()) {
+                        return decodeURIComponent(params[k]);
+                    }
+                }
+                return void 0;
+            } else {
+                return decodeURIComponent(params[p]);
+            }
+        }
+        return params;
+    });
+
+    ASAP(function() {
+        var $ctx, libs;
+        libs = ['https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js'];
+        $ctx = $('#hotels-set');
+        $ctx = $('[data-component-instance="61dcd1b7-ae59-4ef0-86ea-810efdb40969"]');
+
+        preload(libs, function() {
+            var $grid, group2select, initial_selector;
+            initial_selector = '*';
+            if (group2select = $('.group-filters > *.selected', $ctx).attr('data-group')) {
+                initial_selector = group2select !== '*' ? "[data-group*='" + group2select + "']" : '*';
+            }
+            $grid = $('.cards-grid', $ctx).on('layoutComplete', function(e, items) {
+                var by_top, els, max_height, results, row, t, tallest_item;
+                els = items.map(function(i) {
+                    return i.element;
+                });
+                by_top = _.groupBy(els, function(el) {
+                    return $(el).css('top');
+                });
+                results = [];
+                for (t in by_top) {
+                    row = by_top[t];
+                    tallest_item = _.maxBy(row, function(el) {
+                        return $(el).outerHeight();
+                    });
+                    max_height = $(tallest_item).outerHeight();
+                    results.push($(row).css({
+                        minHeight: max_height
+                    }));
+                }
+                return results;
+            }).isotope({
+                itemSelector: '.card-cell',
+                layoutMode: 'fitRows',
+                stagger: 30,
+                filter: initial_selector
+            });
+            $('.group-filters > [data-group]', $ctx).on('click', function() {
+                var $this, group, selector;
+                $this = $(this);
+                group = $this.attr('data-group');
+                selector = group !== '*' ? "[data-group*='" + group + "']" : '*';
+                $grid.find('.card-cell').css({
+                    minHeight: 0
+                });
+                $grid.isotope({
+                    filter: selector
+                });
+                return $this.addClass('selected').siblings('.selected').removeClass('selected');
+            });
+            return setTimeout(function() {
+                return $ctx.addClass('shown');
+            }, 0);
+        });
+    });
+</script>
+</div>

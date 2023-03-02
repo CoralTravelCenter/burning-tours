@@ -607,10 +607,10 @@ body .subpage-search-bg {
 			}
 
 			.backdrop {
-				background: url("../iii/intro-desktop.jpg") center no-repeat;
+				background: url("../iii/kv-desktop.jpg") center no-repeat;
 				background-size: cover;
 				@media screen and (max-width: @mobile-breakpoint) {
-					background-image: url(../iii/intro-mobile.jpg);
+					background-image: url(../iii/kv-mobile.jpg);
 				}
 			}
 
@@ -631,6 +631,7 @@ body .subpage-search-bg {
 
 			.info-overlay {
 				.msg {
+					width: 33%;
 					font-family: museosans;
 					font-weight: normal;
 					h1,h2,h3,h4,h5,h6 {
@@ -645,7 +646,6 @@ body .subpage-search-bg {
 					padding: 6% 0 0;
 					color: white;
 					.fluid-fontsize(1.5vw);
-					font-weight: normal;
 					@media screen and (max-width: 1439px) {
 						transform: translateX(-564px);
 						font-size: 1.2vw;
@@ -683,23 +683,24 @@ body .subpage-search-bg {
 					h2 {
 						display: inline-flex;
 						align-items: center;
-						text-transform: uppercase;
+						//text-transform: uppercase;
 						text-align: left;
 						font-size: 56/21em;
 						line-height: 1;
+						color: white;
 						>span {
-							background: linear-gradient(58.39deg, #FC709A -5.95%, #FFCC00 102.54%);
-							-webkit-background-clip: text;
-							-webkit-text-fill-color: transparent;
-							background-clip: text;
-							text-fill-color: transparent;
+							//background: linear-gradient(58.39deg, #FC709A -5.95%, #FFCC00 102.54%);
+							//-webkit-background-clip: text;
+							//-webkit-text-fill-color: transparent;
+							//background-clip: text;
+							//text-fill-color: transparent;
 						}
 						@media screen and (max-width: @mobile-breakpoint) {
 							font-size: 2.3em;
 						}
 						&:before {
 							flex-shrink: 0;
-							content: '';
+							//content: '';
 							background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjciIGhlaWdodD0iNDIiIHZpZXdCb3g9IjAgMCA2NyA0MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik00MC41MTU4IDUuNjkzNjhDMzguMjc3MSAzLjgwMjQzIDM1LjUxMzMgMi41NzMzOCAzMi4yMjQ0IDIuMDA2NTRDNTAuNDA5OSAtMy45NDQ0NSA2Mi42MDYzIDMuNDA1MTEgNjcgMjMuMjA5NEM2NC43NDg2IDIyLjIyOTMgNjQuMzY3IDIxLjk4OTEgNjIuNjM3MSAyMS45Njk3QzYyLjQwMjcgMjcuODYyNCA2MS4zMTA3IDMwLjE4MSA1OS41NDgxIDMyLjY2OTFDNjEuMzI3IDIyLjU5NjYgNTYuOTY3OCAxNS41NDcyIDQ1LjY1NjQgMTIuMDA2N0M0MC41NDY3IDExLjY3NjQgMzUuMzA0NCAxNC4wNzEgMjIuMDg4NiAyMS4yNTI4QzI3LjQ4MTggMjMuMTg2NCAzMy45MjcgMjMuNTc4NCA0MS40MjI1IDIyLjQyNzFDNjAuNjM2NSAyMC44NjA3IDYyLjM0MjggNDEuMjE0MiA0NS41ODU1IDQyQzQ3LjAwMSAzOS41MTg5IDQ3LjQ0OCAzNy40NzU4IDQ2LjkyODMgMzUuODY3MUMzNy4zMTA1IDM5Ljg0MzkgMjcuNzQzNCAzOC41MjgzIDE4LjIyOTEgMzEuOTIwNEMyNC42MjcxIDMxLjkyMzkgMjkuMzQ5NyAzMC45MjQ1IDMyLjM5MzQgMjguOTE4NEMxNS41NDM0IDI5LjA0MiA1LjQ0OTQ3IDI0Ljk1MjMgMi4xMTY5MiAxNi42NTI3QzkuNDU5ODEgMTkuNTExNiAxNi4wODMxIDE4Ljk0NjUgMjEuOTg4NyAxNC45NTU3QzI5LjA2NDUgOS4xNDQxOSAzNS4yNDA4IDYuMDU3NDUgNDAuNTE3NiA1LjY5MTkxTTAgOS44MzY0MUM0LjI5NTYyIDE3LjIyNjYgMTAuODI5OSAxNy43OTE3IDE5LjYwMjggMTEuNTMzNEMxMS40OTg2IDE0LjEzMjggNC45NjQzMSAxMy41Njc3IDAgOS44MzY0MVoiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcl8yMDZfMTA5KSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJwYWludDBfbGluZWFyXzIwNl8xMDkiIHgxPSI3Ny40Njg3IiB5MT0iLTEuNzI3MjFlLTA2IiB4Mj0iNTIuNzQ5MyIgeTI9IjY0LjA3NTMiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iI0ZDNzA5QSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNGRkNDMDAiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K") center no-repeat;
 							background-size: contain;
 							height: 0.75em;
