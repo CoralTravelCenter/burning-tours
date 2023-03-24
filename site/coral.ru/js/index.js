@@ -1,4 +1,4 @@
-var $fetchBestDeals, $parseResponseMarkup, LOCAL_CHACHE_BY_DESTINATION, log, queryParam, trouble;
+var $fetchAndBuildAvailableDestinations, $fetchBestDeals, $parseResponseMarkup, LOCAL_CHACHE_BY_DESTINATION, destination_preferred_order, log, queryParam, trouble;
 
 window.ASAP = (function() {
   var callall, fns;
@@ -126,6 +126,8 @@ Number.prototype.formatPrice = function() {
 
 LOCAL_CHACHE_BY_DESTINATION = {};
 
+destination_preferred_order = ['Турция', 'Таиланд', 'Египет', 'ОАЭ', 'Бахрейн', 'Мальдивы', 'Шри-Ланка'];
+
 $fetchBestDeals = function(params) {
   var $promise, request;
   $promise = $.Deferred();
@@ -157,7 +159,7 @@ $parseResponseMarkup = function(markup) {
     $stars = $a.find('.stars');
     price = parseFloat($a.find('.price').text().replace(/[^0-9.,]/g, '').replace(',', '.'));
     old_price = price * 1.1;
-    ref = $a.find('h3 ~ em').text().split(/\s*-\s*/), from = ref[0], nights = ref[1], date = ref[2], tourists = ref[3];
+    ref = $a.find('h3 ~ em').text().split(/\s+-\s+/), from = ref[0], nights = ref[1], date = ref[2], tourists = ref[3];
     tourists_qty = parseInt(tourists);
     tourists = ['', 'на одного', 'на двоих', 'на троих'][tourists_qty];
     n_stars = $stars.children().length;
@@ -180,8 +182,54 @@ $parseResponseMarkup = function(markup) {
   }).toArray();
 };
 
+$fetchAndBuildAvailableDestinations = function() {
+  var $promise;
+  $promise = $.Deferred();
+  $.get('/').done(function(home_html) {
+    var available_destinations, bestdealsbox, doc, domparser, links, uniq_links;
+    domparser = new DOMParser();
+    doc = domparser.parseFromString(home_html, 'text/html');
+    bestdealsbox = doc.querySelector('[data-module="bestdealsbox"]');
+    links = Array.from(bestdealsbox.querySelectorAll('.nav-link[data-optionid]'));
+    uniq_links = links.filter(function(nav_link) {
+      return !!nav_link.getAttribute('data-optionid');
+    });
+    uniq_links = _.uniqBy(uniq_links, function(nav_link) {
+      return nav_link.getAttribute('data-optionid');
+    });
+    available_destinations = uniq_links.map(function(nav_link) {
+      var data;
+      return data = {
+        destination_name: nav_link.getAttribute('data-name'),
+        destination_id: nav_link.getAttribute('data-id'),
+        destination_url: nav_link.getAttribute('data-url'),
+        option_id: nav_link.getAttribute('data-optionid')
+      };
+    }).sort(function(a, b) {
+      var aidx, bidx;
+      aidx = destination_preferred_order.indexOf(a.destination_name);
+      if (aidx < 0) {
+        aidx = 2e308;
+      }
+      bidx = destination_preferred_order.indexOf(b.destination_name);
+      if (bidx < 0) {
+        bidx = 2e308;
+      }
+      if (aidx < bidx) {
+        return -1;
+      } else if (aidx > bidx) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    return $promise.resolve(available_destinations);
+  });
+  return $promise;
+};
+
 ASAP(function() {
-  var $flickityReady, $tabs_container, $tabs_selector, first_tab_el, io, last_tab_el, selectDestinationTab;
+  var $flickityReady, $tabs_container, $tabs_selector, selectDestinationTab;
   $('body .subpage-search-bg > .background').append($('#_intro_markup').html());
   $flickityReady = $.Deferred();
   preload('https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.pkgd.min.js', function() {
@@ -265,33 +313,40 @@ ASAP(function() {
       });
     }
   };
-  selectDestinationTab('.burning-tours-widget [data-destination-name][data-default]');
-  $(document).on('click', '.burning-tours-widget [data-destination-name]', function() {
+  $tabs_selector = $('.burning-tours-widget .tabs-selector');
+  $tabs_container = $tabs_selector.parent();
+  $.when($fetchAndBuildAvailableDestinations()).done(function(available_destinations) {
+    var first_tab_el, io, last_tab_el, lis_html;
+    lis_html = available_destinations.map(function(d) {
+      return "<li data-destination-name='" + d.destination_name + "' data-destination-id='" + d.destination_id + "' data-destination-url='" + d.destination_url + "' data-option-id='" + d.option_id + "'>" + d.destination_name + "</li>";
+    }).join('');
+    $tabs_selector.empty().append(lis_html);
+    first_tab_el = $tabs_selector.children(':first').get(0);
+    last_tab_el = $tabs_selector.children(':last').get(0);
+    io = new IntersectionObserver(function(entries, observer) {
+      var entry, i, len1, results;
+      results = [];
+      for (i = 0, len1 = entries.length; i < len1; i++) {
+        entry = entries[i];
+        if (entry.target === first_tab_el) {
+          results.push($tabs_container.toggleClass('scrollable-left', !entry.isIntersecting));
+        } else if (entry.target === last_tab_el) {
+          results.push($tabs_container.toggleClass('scrollable-right', !entry.isIntersecting));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    }, {
+      threshold: 0.5,
+      root: $tabs_container.get(0)
+    });
+    io.observe(first_tab_el);
+    io.observe(last_tab_el);
+    return selectDestinationTab('.burning-tours-widget [data-destination-name]:first');
+  });
+  return $(document).on('click', '.burning-tours-widget [data-destination-name]', function() {
     selectDestinationTab(this);
     return $('.flickity-enabled').flickity('resize');
   });
-  $tabs_selector = $('.burning-tours-widget .tabs-selector');
-  $tabs_container = $tabs_selector.parent();
-  first_tab_el = $tabs_selector.children(':first').get(0);
-  last_tab_el = $tabs_selector.children(':last').get(0);
-  io = new IntersectionObserver(function(entries, observer) {
-    var entry, i, len1, results;
-    results = [];
-    for (i = 0, len1 = entries.length; i < len1; i++) {
-      entry = entries[i];
-      if (entry.target === first_tab_el) {
-        results.push($tabs_container.toggleClass('scrollable-left', !entry.isIntersecting));
-      } else if (entry.target === last_tab_el) {
-        results.push($tabs_container.toggleClass('scrollable-right', !entry.isIntersecting));
-      } else {
-        results.push(void 0);
-      }
-    }
-    return results;
-  }, {
-    threshold: 0.5,
-    root: $tabs_container.get(0)
-  });
-  io.observe(first_tab_el);
-  return io.observe(last_tab_el);
 });
